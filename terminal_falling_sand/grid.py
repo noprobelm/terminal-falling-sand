@@ -9,7 +9,8 @@ from rich.style import Style
 from rich.segment import Segment
 
 
-class Neighbors(Enum):
+class MooreNeighborhood(Enum):
+    UPPER_LEFT = (-1, -1)
     UPPER = (0, -1)
     UPPER_RIGHT = (1, -1)
     RIGHT = (1, 0)
@@ -17,7 +18,6 @@ class Neighbors(Enum):
     LOWER = (0, 1)
     LOWER_LEFT = (-1, 1)
     LEFT = (-1, 0)
-    UPPER_LEFT = (-1, -1)
 
 
 class Grid(dict):
@@ -40,7 +40,7 @@ class Grid(dict):
 
     def _neighbors(self, c: Coordinate) -> dict[str, Element]:
         neighbors = {}
-        for n in Neighbors:
+        for n in MooreNeighborhood:
             nc = c + Coordinate(*n.value)
             if nc.x >= 0 and nc.x <= self._x_max and nc.y >= 0 and nc.y <= self._y_max:
                 neighbors[n.name] = self[nc]

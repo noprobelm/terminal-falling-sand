@@ -31,12 +31,6 @@ class Grid(dict):
                 grid[c] = Empty(c)
         super().__init__(grid)
 
-        table = Table.grid()
-        for y in range(y_max):
-            table.add_row(*[self[Coordinate(x, y)] for x in range(x_max)])
-
-        self._table = table
-
     def fill_random(self, chance: int, rx: range, ry: range) -> None:
         for x in rx:
             for y in ry:

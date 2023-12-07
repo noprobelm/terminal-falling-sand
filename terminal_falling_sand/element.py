@@ -69,6 +69,8 @@ class MovableSolid(Element):
                 ),
             }
 
+        return {}
+
     def __rich_console__(
         self, console: Console, options: ConsoleOptions
     ) -> RenderResult:

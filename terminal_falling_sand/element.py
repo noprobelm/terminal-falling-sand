@@ -1,10 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass
 from rich.console import Console, ConsoleOptions, RenderResult
-from enum import Enum
 from random import randint
-from rich.style import Style
-from rich.segment import Segment
 from rich.text import Text
 
 

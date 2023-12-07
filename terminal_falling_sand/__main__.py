@@ -5,17 +5,6 @@ from rich.live import Live
 from time import sleep
 
 
-class Neighbors(Enum):
-    UPPER = (0, -1)
-    UPPER_RIGHT = (1, -1)
-    RIGHT = ((1, 0),)
-    LOWER_RIGHT = (1, 1)
-    LOWER = (0, 1)
-    LOWER_LEFT = (-1, 1)
-    LEFT = (-1, 0)
-    UPPER_LEFT = (-1, -1)
-
-
 def main():
     console = Console()
     x_max = console.width

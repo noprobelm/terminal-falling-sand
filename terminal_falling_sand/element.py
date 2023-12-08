@@ -4,6 +4,7 @@ from rich.console import Console, ConsoleOptions, RenderResult
 from random import randint
 from rich.text import Text
 from enum import Enum
+from .state import State
 
 
 class MooreNeighborhood(Enum):
@@ -29,75 +30,12 @@ class Coordinate:
 @dataclass
 class Element:
     coordinate: Coordinate
+    state: State
 
-    @property
-    def neighbors(self):
-        return self._neighbors
-
-    @neighbors.setter
-    def neighbors(self, c: Coordinate):
+    def step(self, ref):
         neighbors = {}
         for n in MooreNeighborhood:
-            nc = self.coordinate + Coordinate(*n.value)
-            if nc.x >= 0 and nc.x <= c.x and nc.y >= 0 and nc.y <= c.y:
-                neighbors[n.name] = nc
+            c = self.coordinate + Coordinate(*n.value)
+            neighbors[n.name] = ref[c.y][c.x].state
 
-        self._neighbors = neighbors
-
-    def __rich_console__(
-        self, console: Console, options: ConsoleOptions
-    ) -> RenderResult:
-        yield " "
-
-
-@dataclass
-class Empty(Element):
-    def __post_init__(self):
-        self._text = Text("▄", style="black", end="")
-        self._color = "black"
-
-    def step(self, neighbors):
-        return {}
-
-    def __rich_console__(
-        self, console: Console, options: ConsoleOptions
-    ) -> RenderResult:
-        yield self._text
-
-
-@dataclass
-class MovableSolid(Element):
-    def __post_init__(self):
-        self._text = Text("▄", style="yellow3", end="")
-        self._color = "yellow3"
-
-    def step(self, neighbors):
-        if isinstance(self.neighbors.get("LOWER"), Empty):
-            return {
-                self.coordinate: Empty(self.coordinate),
-                self.neighbors["LOWER"].coordinate: MovableSolid(
-                    self.neighbors["LOWER"].coordinate
-                ),
-            }
-        if randint(1, 2) == 1:
-            if isinstance(self.neighbors.get("LOWER_LEFT"), Empty):
-                return {
-                    self.coordinate: Empty(self.coordinate),
-                    self.neighbors["LOWER_LEFT"].coordinate: MovableSolid(
-                        self.neighbors["LOWER_LEFT"].coordinate
-                    ),
-                }
-        elif isinstance(self.neighbors.get("LOWER_RIGHT"), Empty):
-            return {
-                self.coordinate: Empty(self.coordinate),
-                self.neighbors["LOWER_RIGHT"].coordinate: MovableSolid(
-                    self.neighbors["LOWER_RIGHT"].coordinate
-                ),
-            }
-
-        return {}
-
-    def __rich_console__(
-        self, console: Console, options: ConsoleOptions
-    ) -> RenderResult:
-        yield self._text
+        self.state = self.state.step(neighbors)

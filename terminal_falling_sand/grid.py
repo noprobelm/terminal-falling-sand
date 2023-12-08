@@ -90,7 +90,9 @@ class GridList(list):
             grid.append([])
             for x in range(x_max):
                 c = Coordinate(x, y)
-                grid[c.y].append(Empty(c))
+                e = Empty(c)
+                e.neighbors = Coordinate(self._x_max, self._y_max)
+                grid[c.y].append(e)
         super().__init__(grid)
 
     def fill_random(self, chance: int, rx: range, ry: range) -> None:
@@ -98,27 +100,16 @@ class GridList(list):
             for y in ry:
                 if random.randint(1, chance) == chance:
                     c = Coordinate(x, y)
-                    self[c.y][c.x] = MovableSolid(c)
-
-    def _neighbors(self, c: Coordinate) -> dict[str, Element]:
-        neighbors = {}
-        for n in MooreNeighborhood:
-            nc = c + Coordinate(*n.value)
-            if nc.x >= 0 and nc.x <= self._x_max and nc.y >= 0 and nc.y <= self._y_max:
-                neighbors[n.name] = self[nc.y][nc.x]
-        return neighbors
+                    e = MovableSolid(c)
+                    e.neighbors = Coordinate(self._x_max, self._y_max)
+                    self[c.y][c.x] = e
 
     def update_element(self, element):
-        if isinstance(element, Empty):
-            return
-        neighbors = self._neighbors(element.coordinate)
-        if all(
-            [
-                isinstance(neighbors.get(n), MovableSolid)
-                for n in ["LOWER", "LOWER_LEFT", "LOWER_RIGHT"]
-            ]
-        ):
-            return
+        neighbor_coords = element.neighbors
+        neighbors = {
+            nc: self[neighbor_coords[nc].y][neighbor_coords[nc].x]
+            for nc in neighbor_coords
+        }
         new = element.step(neighbors)
         return new
 

@@ -18,13 +18,13 @@ class Empty(State):
         self._color = "black"
 
     def step(self, neighbors):
-        if isinstance(neighbors.get("UPPER"), MovableSolid):
-            return neighbors.get("UPPER")
+        if isinstance(neighbors.get("UPPER").state, MovableSolid):
+            return neighbors.get("UPPER").state
         if randint(1, 2) == 1:
-            if isinstance(neighbors.get("UPPER_LEFT"), MovableSolid):
-                return neighbors.get("UPPER_LEFT")
-        elif isinstance(neighbors.get("UPPER_RIGHT"), MovableSolid):
-            return neighbors.get("UPPER_RIGHT")
+            if isinstance(neighbors.get("UPPER_LEFT").state, MovableSolid):
+                return neighbors.get("UPPER_LEFT").state
+        elif isinstance(neighbors.get("UPPER_RIGHT").state, MovableSolid):
+            return neighbors.get("UPPER_RIGHT").state
 
         return self
 
@@ -36,12 +36,12 @@ class MovableSolid(State):
         self._color = "yellow3"
 
     def step(self, neighbors):
-        if isinstance(neighbors.get("LOWER"), Empty):
-            return neighbors.get("LOWER")
+        if isinstance(neighbors.get("LOWER").state, Empty):
+            return neighbors.get("LOWER").state
         if randint(1, 2) == 1:
-            if isinstance(neighbors.get("LOWER_LEFT"), Empty):
-                return neighbors.get("LOWER_LEFT")
-        elif isinstance(neighbors.get("LOWER_RIGHT"), Empty):
-            return neighbors.get("LOWER_RIGHT")
+            if isinstance(neighbors.get("LOWER_LEFT").state, Empty):
+                return neighbors.get("LOWER_LEFT").state
+        elif isinstance(neighbors.get("LOWER_RIGHT").state, Empty):
+            return neighbors.get("LOWER_RIGHT").state
 
         return self

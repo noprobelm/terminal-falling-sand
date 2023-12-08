@@ -22,15 +22,15 @@ class MooreNeighborhood(Enum):
 
 
 class GridList(list):
-    def __init__(self, x_max: int, y_max: int) -> None:
+    def __init__(self, xmax: int, ymax: int) -> None:
         grid = []
-        self._x_max = x_max - 1
-        self._y_max = y_max - 1
-        for y in range(y_max):
+        self.xmax = xmax - 1
+        self.ymax = ymax - 1
+        for y in range(ymax):
             grid.append([])
-            for x in range(x_max):
+            for x in range(xmax):
                 c = Coordinate(x, y)
-                e = Element(c, Empty())
+                e = Element(c, Empty(), xmax - 1, ymax - 1)
                 grid[c.y].append(e)
         super().__init__(grid)
 
@@ -39,23 +39,21 @@ class GridList(list):
             for y in ry:
                 if random.randint(1, chance) == chance:
                     c = Coordinate(x, y)
-                    e = Element(c, MovableSolid())
+                    e = Element(c, MovableSolid(), self.xmax, self.ymax)
                     self[c.y][c.x] = e
 
     def step(self):
-        elements = []
-        for y in range(self._y_max):
-            elements.extend([self[y][x] for x in range(self._x_max)])
+        for y in range(self.ymax + 1):
+            for x in range(self.xmax + 1):
+                self[y][x].step(self)
 
-        for element in elements:
-            self.update_element(element)
-
-    def update_element(self, element):
-        element.step(self)
+        for y in range(self.ymax + 1):
+            for x in range(self.xmax + 1):
+                self[y][x]._updated = False
 
     def __rich_console__(self, console: Console, options: ConsoleOptions):
-        for y in range(self._y_max)[::2]:
-            for x in range(self._x_max + 1):
+        for y in range(self.ymax)[::2]:
+            for x in range(self.xmax + 1):
                 bg = self[y][x].state._color
                 fg = self[y + 1][x].state._color
                 yield Segment("▄", Style(color=fg, bgcolor=bg))

@@ -1,7 +1,4 @@
-from typing import Callable
-from enum import Enum
 from dataclasses import dataclass
-from rich.text import Text
 from random import randint
 from .colors import SAND_COLORS
 from typing import Optional

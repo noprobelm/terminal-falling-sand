@@ -45,7 +45,7 @@ class GridList(list):
     def step(self):
         for y in range(self.ymax + 1):
             for x in range(self.xmax + 1):
-                self[y][x].step(self)
+                self[self.ymax - y][x].step(self)
 
         for y in range(self.ymax + 1):
             for x in range(self.xmax + 1):

@@ -1,11 +1,8 @@
 from __future__ import annotations
 from dataclasses import dataclass
-from rich.console import Console, ConsoleOptions, RenderResult
 from random import randint
-from rich.text import Text
 from enum import Enum
 from .state import State, MovableSolid, Empty
-import time
 
 
 class MooreNeighborhood(Enum):
@@ -56,6 +53,7 @@ class Element:
             isinstance(neighbors[n], Empty) for n in neighbors
         ):
             return
+
         if isinstance(self.state, MovableSolid):
             if "LOWER" in neighbors and isinstance(neighbors["LOWER"].state, Empty):
                 n = neighbors["LOWER"]
@@ -65,6 +63,8 @@ class Element:
                 ref[n.coordinate.y][n.coordinate.x]._updated = True
                 ref[self.coordinate.y][self.coordinate.x].state = Empty(n_color)
                 self._updated = True
+                return
+
             elif (
                 "LOWER_LEFT" in neighbors
                 and randint(0, 1) == 1
@@ -90,6 +90,7 @@ class Element:
                 ref[self.coordinate.y][self.coordinate.x].state = Empty(n_color)
                 self._updated = True
 
+        self._updated = True
         # if isinstance(self.state, Empty):
         #    if "UPPER" in neighbors and isinstance(
         #        neighbors["UPPER"].state, MovableSolid

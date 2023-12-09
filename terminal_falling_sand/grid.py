@@ -32,6 +32,9 @@ class Grid(list):
             for x in range(self.xmax + 1):
                 self[self.ymax - y][self.xmax - x].step(self)
 
+        self.reset_updated()
+
+    def reset_updated(self):
         for y in range(self.ymax + 1):
             for x in range(self.xmax + 1):
                 self[y][x]._updated = False

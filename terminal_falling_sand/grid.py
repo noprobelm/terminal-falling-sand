@@ -27,7 +27,7 @@ class Grid(list):
             grid.append([])
             for x in range(xmax):
                 c = Coordinate(x, y)
-                e = Element(c, Empty(), xmax - 1, ymax - 1)
+                e = Element(c, Empty(), self.xmax, self.ymax)
                 grid[c.y].append(e)
         super().__init__(grid)
 

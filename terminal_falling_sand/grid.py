@@ -1,7 +1,6 @@
 import random
 from .element import Element, Coordinate
 from .state import Empty, MovableSolid
-from enum import Enum
 from rich.console import Console, ConsoleOptions
 from rich.style import Style
 from rich.segment import Segment

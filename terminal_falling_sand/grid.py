@@ -21,7 +21,7 @@ class MooreNeighborhood(Enum):
     LEFT = (-1, 0)
 
 
-class GridList(list):
+class Grid(list):
     def __init__(self, xmax: int, ymax: int) -> None:
         grid = []
         self.xmax = xmax - 1

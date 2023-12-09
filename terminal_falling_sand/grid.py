@@ -1,11 +1,8 @@
 import random
 from .element import Element, Coordinate
-from .state import State, Empty, MovableSolid
+from .state import Empty, MovableSolid
 from enum import Enum
 from rich.console import Console, ConsoleOptions
-from rich.table import Table
-from concurrent.futures import ThreadPoolExecutor
-import concurrent.futures
 from rich.style import Style
 from rich.segment import Segment
 

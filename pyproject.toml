@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "terminal_falling_sand"
+version = "0.1.0"
+description = ""
+authors = ["noprobelm <noprobelm@protonmail.com>"]
+packages = [
+    { include = "terminal_falling_sand" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+rich = "^13.7.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+'main' = 'terminal_falling_sand.__main__:main'

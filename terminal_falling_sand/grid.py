@@ -14,6 +14,7 @@ class Grid(list):
         self.midpoint = self.xmax // 2
         if self.midpoint % 2 == 1:
             self.midpoint += 1
+
         for y in range(ymax):
             grid.append([])
             for x in range(xmax):

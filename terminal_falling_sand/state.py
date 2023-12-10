@@ -18,7 +18,6 @@ class Empty(State):
         super().__init__(color)
 
 
-@dataclass
 class MovableSolid(State):
     def __init__(self, color: Optional[str] = None):
         if color is None:

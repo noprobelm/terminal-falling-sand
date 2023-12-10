@@ -41,13 +41,6 @@ class CellMatrix(list):
             for x2 in range(midpoint, self.xmax + 1):
                 self[self.ymax - y][self.xmax - x2 - midpoint].step(self)
 
-        self.reset_updated()
-
-    def reset_updated(self):
-        for y in range(self.ymax + 1):
-            for x in range(self.xmax + 1):
-                self[y][x]._updated = False
-
     def __rich_console__(self, console: Console, options: ConsoleOptions):
         for y in range(self.ymax)[::2]:
             for x in range(self.xmax + 1):

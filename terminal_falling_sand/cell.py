@@ -2,7 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from random import randint
 from enum import Enum
-from .state import State, MovableSolid, Empty
+from .cell_state import State, MovableSolid, Empty
 
 
 class MooreNeighborhood(Enum):
@@ -26,13 +26,13 @@ class Coordinate:
 
 
 class Cell:
-    def __init__(self, coord: Coordinate, state: State, xmax: int, ymax: int):
+    def __init__(self, coord: Coordinate, max_coord: Coordinate, state: State):
         self.coord = coord
         self.state = state
         self._neighbors = {}
         for n in MooreNeighborhood:
             c = self.coord + Coordinate(*n.value)
-            if (0 <= c.x <= xmax) and (0 <= c.y <= ymax):
+            if (0 <= c.x <= max_coord.x) and (0 <= c.y <= max_coord.y):
                 self._neighbors[n.name] = c
 
     def step(self, ref):

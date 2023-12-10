@@ -48,17 +48,3 @@ class CellMatrix(list):
                 fg = self[y + 1][x].state._color
                 yield Segment("▄", Style(color=fg, bgcolor=bg))
             yield Segment.line()
-
-
-"""
-        with ThreadPoolExecutor(max_workers=16) as executor:
-            futures = {
-                executor.submit(self.update_element, ref, element): element
-                for element in flattened
-            }
-
-            for future in concurrent.futures.as_completed(futures):
-                new = future.result()
-                self[new[0].y][new[0].x].state = new[1]
-
-"""

@@ -25,7 +25,7 @@ class Coordinate:
         return Coordinate(self.x + other.x, self.y + other.y)
 
 
-class Element:
+class Cell:
     def __init__(self, coord: Coordinate, state: State, xmax: int, ymax: int):
         self.coord = coord
         self.state = state

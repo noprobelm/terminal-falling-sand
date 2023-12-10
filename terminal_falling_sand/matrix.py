@@ -1,5 +1,5 @@
 import random
-from .element import Element, Coordinate
+from .cell import Cell, Coordinate
 from .state import Empty, MovableSolid
 from rich.console import Console, ConsoleOptions
 from rich.style import Style
@@ -19,7 +19,7 @@ class CellMatrix(list):
             grid.append([])
             for x in range(xmax):
                 c = Coordinate(x, y)
-                e = Element(c, Empty(), self.xmax, self.ymax)
+                e = Cell(c, Empty(), self.xmax, self.ymax)
                 grid[c.y].append(e)
         super().__init__(grid)
 
@@ -28,7 +28,7 @@ class CellMatrix(list):
             for y in ry:
                 if random.randint(1, chance) == chance:
                     c = Coordinate(x, y)
-                    e = Element(c, MovableSolid(), self.xmax, self.ymax)
+                    e = Cell(c, MovableSolid(), self.xmax, self.ymax)
                     self[c.y][c.x] = e
 
     def step(self):

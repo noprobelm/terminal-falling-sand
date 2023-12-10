@@ -1,11 +1,11 @@
-from .grid import Grid
+from .matrix import CellMatrix
 from rich.console import Console
 from rich.live import Live
 from time import sleep
 from typing import Optional
 
 
-def terminal_render(grid: Grid, refresh_per_second: Optional[int] = None):
+def terminal_render(grid: CellMatrix, refresh_per_second: Optional[int] = None):
     if refresh_per_second is not None:
         refresh_rate = 1 / refresh_per_second
     else:
@@ -17,8 +17,8 @@ def terminal_render(grid: Grid, refresh_per_second: Optional[int] = None):
             sleep(refresh_rate)
 
 
-def build_grid(xmax: int, ymax: int) -> Grid:
-    return Grid(xmax, ymax)
+def build_grid(xmax: int, ymax: int) -> CellMatrix:
+    return CellMatrix(xmax, ymax)
 
 
 def main():

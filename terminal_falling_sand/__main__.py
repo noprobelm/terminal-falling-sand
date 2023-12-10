@@ -27,7 +27,7 @@ def main():
     ymax = console.height * 2
     grid = build_grid(console.width, console.height * 2)
     grid.fill_random(2, range(xmax // 4, int(xmax * 0.75)), range(ymax))
-    grid.fill_random(2, range(xmax // 12, int(xmax * 0.24)), range(ymax // 2))
+    #    grid.fill_random(2, range(0, int(xmax * 0.24)), range(ymax // 2))
     #    grid.fill_random(2, range(xmax // 2, xmax // 2 + 2), range(ymax))
 
     terminal_render(grid, 60)

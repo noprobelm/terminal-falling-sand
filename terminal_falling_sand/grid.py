@@ -28,9 +28,14 @@ class Grid(list):
                     self[c.y][c.x] = e
 
     def step(self):
+        midpoint = self.xmax // 2
+        if midpoint % 2 == 1:
+            midpoint += 1
         for y in range(self.ymax + 1):
-            for x in range(self.xmax + 1):
-                self[self.ymax - y][self.xmax - x].step(self)
+            for x1 in range(0, midpoint + 1):
+                self[self.ymax - y][x1].step(self)
+            for x2 in range(midpoint, self.xmax + 1):
+                self[self.ymax - y][self.xmax - x2 - midpoint].step(self)
 
         self.reset_updated()
 

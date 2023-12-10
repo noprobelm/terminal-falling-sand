@@ -55,74 +55,180 @@ class Element:
             return
 
         if isinstance(self.state, MovableSolid):
-            if "LOWER" in neighbors and isinstance(neighbors["LOWER"].state, Empty):
+            if "LOWER" in neighbors.keys() and isinstance(
+                neighbors["LOWER"].state, Empty
+            ):
                 n = neighbors["LOWER"]
                 n_color = n.state._color
                 self_color = self.state._color
                 ref[n.coordinate.y][n.coordinate.x].state = MovableSolid(self_color)
-                ref[n.coordinate.y][n.coordinate.x]._updated = True
                 ref[self.coordinate.y][self.coordinate.x].state = Empty(n_color)
-                self._updated = True
                 return
-
             elif (
-                "LOWER_LEFT" in neighbors
-                and randint(0, 1) == 1
+                "LOWER_LEFT" in neighbors.keys()
+                and "LOWER_RIGHT" in neighbors.keys()
                 and isinstance(neighbors["LOWER_LEFT"].state, Empty)
+                and isinstance(neighbors["LOWER_RIGHT"].state, Empty)
+            ):
+                candidates = [
+                    neighbors["LOWER_LEFT"],
+                    neighbors["LOWER_RIGHT"],
+                ]
+                n = candidates[randint(0, 1)]
+                n_color = n.state._color
+                self_color = self.state._color
+                ref[n.coordinate.y][n.coordinate.x].state = MovableSolid(self_color)
+                ref[self.coordinate.y][self.coordinate.x].state = Empty(n_color)
+
+            elif "LOWER_LEFT" in neighbors.keys() and isinstance(
+                neighbors["LOWER_LEFT"].state, Empty
             ):
                 n = neighbors["LOWER_LEFT"]
                 n_color = n.state._color
                 self_color = self.state._color
-
                 ref[n.coordinate.y][n.coordinate.x].state = MovableSolid(self_color)
-                ref[n.coordinate.y][n.coordinate.x]._updated = True
                 ref[self.coordinate.y][self.coordinate.x].state = Empty(n_color)
-                self._updated = True
-            elif "LOWER_RIGHT" in neighbors and isinstance(
+
+            elif "LOWER_RIGHT" in neighbors.keys() and isinstance(
                 neighbors["LOWER_RIGHT"].state, Empty
             ):
                 n = neighbors["LOWER_RIGHT"]
                 n_color = n.state._color
                 self_color = self.state._color
-
                 ref[n.coordinate.y][n.coordinate.x].state = MovableSolid(self_color)
-                ref[n.coordinate.y][n.coordinate.x]._updated = True
                 ref[self.coordinate.y][self.coordinate.x].state = Empty(n_color)
-                self._updated = True
+
+            # if "LOWER_LEFT" and "LOWER_RIGHT" in neighbors:
+            #     candidates = [neighbors["LOWER_LEFT"], neighbors["LOWER_RIGHT"]]
+            #     if isinstance(candidates[0].state, Empty) and isinstance(
+            #         candidates[1].state, Empty
+            #     ):
+            #         n = candidates[randint(0, 1)]
+            #         n_color = n.state._color
+            #         self_color = self.state._color
+            #         ref[n.coordinate.y][n.coordinate.x].state = MovableSolid(self_color)
+            #         ref[n.coordinate.y][n.coordinate.x]._updated = True
+
+            #         ref[self.coordinate.y][self.coordinate.x].state = Empty(n_color)
+            #         self._updated = True
+            #         return
+
+            #     elif isinstance(candidates[0].state, Empty):
+            #         n = candidates[0]
+            #         n_color = n.state._color
+            #         self_color = self.state._color
+            #         ref[n.coordinate.y][n.coordinate.x].state = MovableSolid(self_color)
+            #         ref[n.coordinate.y][n.coordinate.x]._updated = True
+
+            #         ref[self.coordinate.y][self.coordinate.x].state = Empty(n_color)
+            #         self._updated = True
+            #         return
+            #     elif isinstance(candidates[1].state, Empty):
+            #         n = candidates[1]
+            #         n_color = n.state._color
+            #         self_color = self.state._color
+            #         ref[n.coordinate.y][n.coordinate.x].state = MovableSolid(self_color)
+            #         ref[n.coordinate.y][n.coordinate.x]._updated = True
+
+            #         ref[self.coordinate.y][self.coordinate.x].state = Empty(n_color)
+            #         self._updated = True
+            #         return
+            # elif "LOWER_LEFT" in neighbors and isinstance(
+            #     neighbors["LOWER_LEFT"].state, Empty
+            # ):
+            #     n = neighbors["LOWER_LEFT"]
+            #     n_color = n.state._color
+            #     self_color = self.state._color
+            #     ref[n.coordinate.y][n.coordinate.x].state = MovableSolid(self_color)
+            #     ref[n.coordinate.y][n.coordinate.x]._updated = True
+            #     ref[self.coordinate.y][self.coordinate.x].state = Empty(n_color)
+            #     self._updated = True
+            #     return
+
+            # elif "LOWER_RIGHT" in neighbors and isinstance(
+            #     neighbors["LOWER_RIGHT"].state, Empty
+            # ):
+            #     n = neighbors["LOWER_RIGHT"]
+            #     n_color = n.state._color
+            #     self_color = self.state._color
+            #     ref[n.coordinate.y][n.coordinate.x].state = MovableSolid(self_color)
+            #     ref[n.coordinate.y][n.coordinate.x]._updated = True
+            #     ref[self.coordinate.y][self.coordinate.x].state = Empty(n_color)
+            #     self._updated = True
+            #     return
+
+        # if isinstance(self.state, Empty):
+        #     if "UPPER" in neighbors and isinstance(
+        #         neighbors["UPPER"].state, MovableSolid
+        #     ):
+        #         n = neighbors["UPPER"]
+        #         n_color = n.state._color
+        #         self_color = self.state._color
+        #         ref[n.coordinate.y][n.coordinate.x].state = Empty(self_color)
+        #         ref[n.coordinate.y][n.coordinate.x]._updated = True
+        #         ref[self.coordinate.y][self.coordinate.x].state = MovableSolid(n_color)
+        #         self._updated = True
+        #         return
+
+        #     if "UPPER_LEFT" and "UPPER_RIGHT" in neighbors:
+        #         candidates = [neighbors["UPPER_LEFT"], neighbors["UPPER_RIGHT"]]
+        #         if isinstance(candidates[0].state, MovableSolid) and isinstance(
+        #             candidates[1].state, MovableSolid
+        #         ):
+        #             n = candidates[randint(0, 1)]
+        #             n_color = n.state._color
+        #             self_color = self.state._color
+        #             ref[n.coordinate.y][n.coordinate.x].state = Empty(self_color)
+        #             ref[n.coordinate.y][n.coordinate.x]._updated = True
+
+        #             ref[self.coordinate.y][self.coordinate.x].state = MovableSolid(
+        #                 n_color
+        #             )
+        #             self._updated = True
+        #             return
+
+        #         elif isinstance(candidates[0].state, MovableSolid):
+        #             n = candidates[0]
+        #             n_color = n.state._color
+        #             self_color = self.state._color
+        #             ref[n.coordinate.y][n.coordinate.x].state = Empty(self_color)
+        #             ref[n.coordinate.y][n.coordinate.x]._updated = True
+
+        #             ref[self.coordinate.y][self.coordinate.x].state = MovableSolid(
+        #                 n_color
+        #             )
+        #             self._updated = True
+        #             return
+        #         elif isinstance(candidates[1].state, MovableSolid):
+        #             n = candidates[1]
+        #             n_color = n.state._color
+        #             self_color = self.state._color
+        #             ref[n.coordinate.y][n.coordinate.x].state = Empty(self_color)
+        #             ref[n.coordinate.y][n.coordinate.x]._updated = True
+
+        #             ref[self.coordinate.y][self.coordinate.x].state = MovableSolid(
+        #                 n_color
+        #             )
+        #             self._updated = True
+        #             return
+        #     elif "UPPER_LEFT" in neighbors:
+        #         n = neighbors["UPPER_LEFT"]
+        #         n_color = n.state._color
+        #         self_color = self.state._color
+        #         ref[n.coordinate.y][n.coordinate.x].state = Empty(self_color)
+        #         ref[n.coordinate.y][n.coordinate.x]._updated = True
+        #         ref[self.coordinate.y][self.coordinate.x].state = MovableSolid(n_color)
+        #         self._updated = True
+        #         return
+
+        #     elif "UPPER_RIGHT" in neighbors:
+        #         n = neighbors["UPPER_RIGHT"]
+        #         n_color = n.state._color
+        #         self_color = self.state._color
+        #         ref[n.coordinate.y][n.coordinate.x].state = Empty(self_color)
+        #         ref[n.coordinate.y][n.coordinate.x]._updated = True
+        #         ref[self.coordinate.y][self.coordinate.x].state = MovableSolid(n_color)
+        #         self._updated = True
+        #         return
 
         self._updated = True
-        # if isinstance(self.state, Empty):
-        #    if "UPPER" in neighbors and isinstance(
-        #        neighbors["UPPER"].state, MovableSolid
-        #    ):
-        #        n = neighbors["UPPER"]
-        #        n_color = n.state._color
-        #        self_color = self.state._color
-        #        ref[n.coordinate.y][n.coordinate.x].state = Empty(self_color)
-        #        ref[n.coordinate.y][n.coordinate.x]._updated = True
-        #        ref[self.coordinate.y][self.coordinate.x].state = MovableSolid(n_color)
-        #        self._updated = True
-        #    elif (
-        #        "UPPER_LEFT" in neighbors
-        #        and randint(0, 1) == 1
-        #        and isinstance(neighbors["UPPER_LEFT"].state, MovableSolid)
-        #    ):
-        #        n = neighbors["UPPER_LEFT"]
-        #        n_color = n.state._color
-        #        self_color = self.state._color
-
-        #        ref[n.coordinate.y][n.coordinate.x].state = Empty(self_color)
-        #        ref[n.coordinate.y][n.coordinate.x]._updated = True
-        #        ref[self.coordinate.y][self.coordinate.x].state = MovableSolid(n_color)
-        #        self._updated = True
-        #    elif "UPPER_RIGHT" in neighbors and isinstance(
-        #        neighbors["UPPER_RIGHT"].state, MovableSolid
-        #    ):
-        #        n = neighbors["UPPER_RIGHT"]
-        #        n_color = n.state._color
-        #        self_color = self.state._color
-
-        #        ref[n.coordinate.y][n.coordinate.x].state = Empty(self_color)
-        #        ref[n.coordinate.y][n.coordinate.x]._updated = True
-        #        ref[self.coordinate.y][self.coordinate.x].state = MovableSolid(n_color)
-        #        self._updated = True

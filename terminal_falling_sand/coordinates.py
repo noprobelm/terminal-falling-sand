@@ -3,11 +3,7 @@ from dataclasses import dataclass
 from enum import Enum
 
 
-class Neighborhood(Enum):
-    pass
-
-
-class MooreNeighborhood(Neighborhood):
+class MooreNeighborhood(Enum):
     UPPER_LEFT = (-1, -1)
     UPPER = (0, -1)
     UPPER_RIGHT = (1, -1)

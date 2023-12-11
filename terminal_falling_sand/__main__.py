@@ -26,7 +26,6 @@ def simulate(
         render (Optional[bool]): Whether we should render the simulation to the terminal or not
 
     """
-
     if refresh_per_second is not None:
         refresh_rate = 1 / refresh_per_second
     else:
@@ -59,7 +58,6 @@ def build_grid(xmax: int, ymax: int) -> CellMatrix:
         CellMatrix
 
     """
-
     return CellMatrix(xmax, ymax)
 
 
@@ -71,7 +69,6 @@ def main() -> None:
     - Runs the simulate method using default args
 
     """
-
     console = Console()
     xmax = console.width
     ymax = console.height * 2

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from random import randint
 from typing import Optional
+
 from .coordinates import Coordinate
 
 

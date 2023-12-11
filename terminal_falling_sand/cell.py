@@ -1,6 +1,7 @@
 """Hosts the base Cell class used in the simulation"""
 
 from __future__ import annotations
+
 from .cell_state import CellState
 from .coordinates import Coordinate, MooreNeighborhood
 

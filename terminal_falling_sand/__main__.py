@@ -1,3 +1,4 @@
+"""Main entrypoint for running the falling sand simulation"""
 import random
 from time import sleep
 from typing import Optional
@@ -10,24 +11,34 @@ from .matrix import CellMatrix
 
 
 def simulate(
-    grid: CellMatrix,
-    refresh_per_second: Optional[int] = None,
+    matrix: CellMatrix,
+    refresh_per_second: Optional[int] = 60,
     render: Optional[bool] = True,
 ):
+    """Main entrypoint for the simulation
+
+    Takes a cellular matrix as a parameter and runs a simulation from it using the Matrix.step() method.
+
+    Args:
+        matrix (CellMatrix): The matrix to run a simulation on
+        refresh_per_second (Optional[int]): The refresh rate for the simulation. Set to 'None' to remove rate constraint
+        render (Optional[bool]): Whether we should render the simulation to the terminal or not
+    """
+
     if refresh_per_second is not None:
         refresh_rate = 1 / refresh_per_second
     else:
         refresh_rate = 0
 
     if render is True:
-        with Live(grid, screen=True, auto_refresh=False) as live:
+        with Live(matrix, screen=True, auto_refresh=False) as live:
             while True:
-                grid.step()
-                live.update(grid, refresh=True)
+                matrix.step()
+                live.update(matrix, refresh=True)
                 sleep(refresh_rate)
     else:
         while True:
-            grid.step()
+            matrix.step()
             sleep(refresh_rate)
 
 

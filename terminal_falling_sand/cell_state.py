@@ -3,15 +3,15 @@ from __future__ import annotations
 from random import randint
 
 
-class State:
+class CellState:
     def __init__(self, weight: int):
         self.weight = weight
 
-    def change_state(self, neighbors: dict[str, State]):
+    def change_state(self, neighbors: dict[str, CellState]):
         return None
 
 
-class Empty(State):
+class Empty(CellState):
     def __init__(self, weight: int):
         self.weight = weight
         pass
@@ -20,7 +20,7 @@ class Empty(State):
         return None
 
 
-class MovableSolid(State):
+class MovableSolid(CellState):
     def __init__(self, weight: int):
         self.weight = weight
 
@@ -59,7 +59,7 @@ class MovableSolid(State):
         return (n.coord, state)
 
 
-class Liquid(State):
+class Liquid(CellState):
     def __init__(self, weight: int):
         self.weight = weight
 

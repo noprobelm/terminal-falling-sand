@@ -2,14 +2,14 @@ from random import randint
 
 from . import cell_state
 from .cell import Cell
-from .cell_state import State
+from .cell_state import CellState
 from .colors import SAND_COLORS, WATER_COLORS
 from .coordinates import Coordinate
 
 
 class Element(Cell):
     def __init__(
-        self, coord: Coordinate, max_coord: Coordinate, state: State, color: str
+        self, coord: Coordinate, max_coord: Coordinate, state: CellState, color: str
     ):
         super().__init__(coord, max_coord, state, color)
 

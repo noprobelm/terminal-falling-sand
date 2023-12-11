@@ -1,6 +1,6 @@
 """Hosts the base Cell class used in the simulation"""
 
-from .cell_state import State
+from .cell_state import CellState
 from .coordinates import Coordinate, MooreNeighborhood
 
 
@@ -21,7 +21,7 @@ class Cell:
         self,
         coord: Coordinate,
         max_coord: Coordinate,
-        state: State,
+        state: CellState,
         color: str,
     ):
         self.coord = coord

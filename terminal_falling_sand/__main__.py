@@ -14,7 +14,7 @@ def simulate(
     matrix: CellMatrix,
     refresh_per_second: Optional[int] = 60,
     render: Optional[bool] = True,
-):
+) -> None:
     """Main entrypoint for the simulation
 
     Takes a cellular matrix as a parameter and runs a simulation from it using the Matrix.step() method.

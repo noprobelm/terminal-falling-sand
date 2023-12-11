@@ -11,7 +11,28 @@ from .elements import ElementType, Empty
 
 
 class CellMatrix(list):
+    """This class acts as the directory for all elements in the simulation
+
+    Since the matrix will always be continuous ('Empty' elements represent empty space), we subclass from list to enable
+    efficient lookup of elements. A dictionary-like structure would usually be less efficient, especially when updating
+    values, due to the necessity of rehashing keys.
+
+    Attributes:
+        max_coord (Coordinate): The maximum valid coordinate found in the grid
+        midpoint (Coordinate): The midpoint of the grid.
+
+    """
+
     def __init__(self, xmax: int, ymax: int) -> None:
+        """Initializes a CellMatrix instance
+
+        Generates a new grid full of 'Empty' elements
+
+        Args:
+            xmax (int): The maximum x value in the grid
+            ymax (int): The maximum y value in the grid
+
+        """
         matrix = []
         self.max_coord = Coordinate(xmax - 1, ymax - 1)
         self.midpoint = self.max_coord.x // 2

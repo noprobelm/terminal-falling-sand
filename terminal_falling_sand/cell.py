@@ -1,5 +1,6 @@
 """Hosts the base Cell class used in the simulation"""
 
+from __future__ import annotations
 from .cell_state import CellState
 from .coordinates import Coordinate, MooreNeighborhood
 
@@ -40,7 +41,14 @@ class Cell:
             if (0 <= c.x <= max_coord.x) and (0 <= c.y <= max_coord.y):
                 self._neighbors[n.name] = c
 
-    def step(self, matrix):
+    def step(self, matrix: list):
+        """Steps the cell forward based on the parameters of its neighbors
+
+        If the cell's state changes, swap its color and state with the target neighbor.
+
+        Args:
+            matrix (list): The underlying list element of the CellMatrix
+        """
         neighbors = {}
         for n in self._neighbors:
             c = self._neighbors[n]

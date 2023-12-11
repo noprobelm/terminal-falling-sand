@@ -1,3 +1,5 @@
+"""The coordinate system used by the CellMatrix simulation"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -5,6 +7,8 @@ from enum import Enum
 
 
 class MooreNeighborhood(Enum):
+    """Enumeration for variants of neighbors found in a Moore Neighborhood"""
+
     UPPER_LEFT = (-1, -1)
     UPPER = (0, -1)
     UPPER_RIGHT = (1, -1)
@@ -17,8 +21,11 @@ class MooreNeighborhood(Enum):
 
 @dataclass(eq=True, order=True, frozen=True)
 class Coordinate:
+    """An x/y coordinate to reference location in a CellMatrix"""
+
     x: int
     y: int
 
     def __add__(self, other: Coordinate) -> Coordinate:
+        """Returns the sum of one coordinate and another. Primarily used to identify neighbors"""
         return Coordinate(self.x + other.x, self.y + other.y)

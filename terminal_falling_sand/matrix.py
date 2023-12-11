@@ -1,9 +1,11 @@
-from .elements import ElementType, Empty
-from rich.console import Console, ConsoleOptions
-from rich.style import Style
-from rich.segment import Segment
-from .coordinates import Coordinate
 from typing import Type
+
+from rich.console import Console, ConsoleOptions
+from rich.segment import Segment
+from rich.style import Style
+
+from .coordinates import Coordinate
+from .elements import ElementType, Empty
 
 
 class CellMatrix(list):

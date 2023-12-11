@@ -1,11 +1,12 @@
 import random
-from .matrix import CellMatrix
-from rich.console import Console
-from rich.live import Live
 from time import sleep
 from typing import Optional
-from .elements import Water, Sand
-import random
+
+from rich.console import Console
+from rich.live import Live
+
+from .elements import Sand, Water
+from .matrix import CellMatrix
 
 
 def simulate(

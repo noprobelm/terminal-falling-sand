@@ -1,5 +1,5 @@
-from .coordinates import Coordinate, MooreNeighborhood
 from .cell_state import State
+from .coordinates import Coordinate, MooreNeighborhood
 
 
 class Cell:

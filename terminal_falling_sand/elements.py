@@ -1,9 +1,10 @@
+from random import randint
+
 from . import cell_state
+from .cell import Cell
 from .cell_state import State
 from .colors import SAND_COLORS, WATER_COLORS
-from random import randint
 from .coordinates import Coordinate
-from .cell import Cell
 
 
 class Element(Cell):

@@ -72,7 +72,7 @@ class Empty(CellState):
 class MovableSolid(CellState):
     """Defines behavior for movable solids
 
-    Args:
+    Attributes:
         weight (int): The weight of the cell
     """
 
@@ -134,10 +134,33 @@ class MovableSolid(CellState):
 
 
 class Liquid(CellState):
+    """Defines behavior for liquids
+
+    Args:
+        weight (int): The weight of the cell
+    """
+
     def __init__(self, weight: int):
+        """Initializes an instance of the Liquid class
+
+        Args:
+            weight (int): The weight of the cell
+
+        """
         self.weight = weight
 
-    def change_state(self, neighbors: dict):
+    def change_state(self, neighbors: dict) -> Optional[tuple[Coordinate, CellState]]:
+        """Defines the behavior of a Liquid
+
+        A MovableSolid's behavior can be defined as:
+            - Explore all paths we would explore with the MovableSolid
+            - Else if none of these are available, look left and right for valid candidates to move to
+            - Else, retain state. Return None
+
+        Args:
+            neighbors (dict[str, CellState]): A map of MooreNeighborhood variants to their respective cell's state
+        """
+
         if (
             "LOWER" in neighbors.keys()
             and self.weight > neighbors["LOWER"].state.weight

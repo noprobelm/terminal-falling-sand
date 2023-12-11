@@ -75,11 +75,11 @@ class CellMatrix(list):
         """
         for y in range(self.max_coord.y + 1):
             for x1 in range(0, self.midpoint + 1):
-                self[self.max_coord.y - y][x1].step(self)
+                self[self.max_coord.y - y][x1].change_state(self)
             for x2 in range(self.midpoint, self.max_coord.x + 1):
-                self[self.max_coord.y - y][self.max_coord.x - x2 - self.midpoint].step(
-                    self
-                )
+                self[self.max_coord.y - y][
+                    self.max_coord.x - x2 - self.midpoint
+                ].change_state(self)
 
     def __rich_console__(
         self, console: Console, options: ConsoleOptions

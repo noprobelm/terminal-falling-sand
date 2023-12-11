@@ -44,7 +44,7 @@ class Cell:
             if (0 <= c.x <= max_coord.x) and (0 <= c.y <= max_coord.y):
                 self._neighbors[n.name] = c
 
-    def step(self, matrix: list) -> None:
+    def change_state(self, matrix: list) -> None:
         """Steps the cell forward based on the parameters of its neighbors
 
         If the cell's state changes, swap its color and state with the target neighbor.

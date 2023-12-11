@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
+from collections import namedtuple
 
 
 class MooreNeighborhood(Enum):
@@ -29,3 +30,7 @@ class Coordinate:
     def __add__(self, other: Coordinate) -> Coordinate:
         """Returns the sum of one coordinate and another. Primarily used to identify neighbors"""
         return Coordinate(self.x + other.x, self.y + other.y)
+
+
+Neighbors = namedtuple("Neighbors", [member.name for member in MooreNeighborhood])
+NeighborStates = namedtuple("Neighbors", [member.name for member in MooreNeighborhood])

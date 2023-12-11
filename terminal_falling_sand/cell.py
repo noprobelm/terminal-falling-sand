@@ -1,7 +1,7 @@
 """Hosts the base Cell class used in the simulation"""
 
 from .cell_state import CellState
-from .coordinates import Coordinate, MooreNeighborhood
+from .coordinates import Coordinate, MooreNeighborhood, Neighbors, NeighborStates
 from typing import Optional
 
 
@@ -34,11 +34,15 @@ class Cell:
         """
         self.state = state
         self.color = color
-        self._neighbors = {}
+        neighbors = []
         for n in MooreNeighborhood:
             c = coord + Coordinate(*n.value)
             if (0 <= c.x <= max_coord.x) and (0 <= c.y <= max_coord.y):
-                self._neighbors[n.name] = c
+                neighbors.append(c)
+            else:
+                neighbors.append(None)
+
+        self.neighbors = Neighbors(*neighbors)
 
     def change_state(self, matrix: list) -> Optional[Coordinate]:
         """Steps the cell forward based on the parameters of its neighbors
@@ -48,8 +52,15 @@ class Cell:
         Args:
             matrix (list): The underlying list element of the CellMatrix
         """
-        neighbor = self.state.change_state(self._neighbors, matrix)
-        if neighbor:
+        states = []
+        for n in self.neighbors:
+            if n is not None:
+                states.append(matrix[n.y][n.x])
+            else:
+                states.append(None)
+
+        neighbor = self.state.change_state(self.neighbors, matrix)
+        if neighbor is not None:
             old_state = self.state
             old_color = self.color
             self.color = matrix[neighbor.y][neighbor.x].color

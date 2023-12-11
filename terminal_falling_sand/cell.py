@@ -15,6 +15,8 @@ class Cell:
     Attributes:
         coord (Coordinate): The coordinate of the cell
         max_coord (Coordinate): The maximum possible coordinate for a cell. Used to identify valid neighbors
+        state (CellState): The state a cell is in
+        color (str): The color of a cell
         _neighbors (dict[str, Coordinate]): A dictionary of MooreNeighboorhood enum variants to their respective coord
     """
 

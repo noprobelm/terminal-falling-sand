@@ -1,14 +1,23 @@
+"""Hosts the CellState class and its various subclasses"""
+
 from __future__ import annotations
 
 from random import randint
 
 
 class CellState:
-    def __init__(self, weight: int):
+    """Base class for a cell's state
+
+    Attributes:
+        weight (int): Usually influences whether a cell should move in the direction it's looking. The usage of this
+                      attr can vary between subclasses
+    """
+
+    def __init__(self, weight: int) -> None:
         self.weight = weight
 
-    def change_state(self, neighbors: dict[str, CellState]):
-        return None
+    def change_state(self, neighbors: dict[str, CellState]) -> None:
+        return
 
 
 class Empty(CellState):

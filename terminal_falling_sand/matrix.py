@@ -58,7 +58,7 @@ class CellMatrix(list):
         coord = Coordinate(x, y)
         self[y][x] = element(coord, self.max_coord)
 
-    def step(self):
+    def step(self) -> None:
         for y in range(self.max_coord.y + 1):
             for x1 in range(0, self.midpoint + 1):
                 self[self.max_coord.y - y][x1].step(self)

@@ -43,10 +43,30 @@ def simulate(
 
 
 def build_grid(xmax: int, ymax: int) -> CellMatrix:
+    """Builds a grid based on x and y constraints
+
+    Args:
+        xmax (int): The maximum x value for the grid
+        ymax (int): The maximum y value for the grid
+
+    NOTE: If rendering to a terminal, ymax might be best to set to twice the terminal's height. This is to accommodate
+    the height/width aspect ratio of ASCII text in the terminal (which is usually 2:1)
+
+    Returns:
+        CellMatrix
+    """
+
     return CellMatrix(xmax, ymax)
 
 
-def main():
+def main() -> None:
+    """Main entrypoint for setting grid parameters and spawning elements into the simulation
+
+    - Sets an xmax/ymax based on the invoking terminal's dimensions, then builds a grid based on these values.
+    - Spawns in various elements to participate in the simulation
+    - Runs the simulate method using default args
+    """
+
     console = Console()
     xmax = console.width
     ymax = console.height * 2
@@ -66,7 +86,7 @@ def main():
             if random.randint(0, 1) == 1:
                 grid.spawn(Water, x, y)
 
-    simulate(grid, 60)
+    simulate(grid)
 
 
 if __name__ == "__main__":

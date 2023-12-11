@@ -49,8 +49,9 @@ def build_grid(xmax: int, ymax: int) -> CellMatrix:
         xmax (int): The maximum x value for the grid
         ymax (int): The maximum y value for the grid
 
-    NOTE: If rendering to a terminal, ymax might be best to set to twice the terminal's height. This is to accommodate
-    the height/width aspect ratio of ASCII text in the terminal (which is usually 2:1)
+    Note
+        If rendering to a terminal, ymax might be best to set to twice the terminal's height. This is to accommodate
+        the height/width aspect ratio of ASCII text in the terminal (which is usually 2:1).
 
     Returns:
         CellMatrix

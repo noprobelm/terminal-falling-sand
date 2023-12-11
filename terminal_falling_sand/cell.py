@@ -22,7 +22,6 @@ class Cell:
         coord: Coordinate,
         max_coord: Coordinate,
         state: CellState,
-        color: str,
     ) -> None:
         """Initializes an instance of Cell
 
@@ -33,7 +32,6 @@ class Cell:
             color (str): The color of the cell. Hex or standard color names are acceptable here
         """
         self.state = state
-        self.color = color
         neighbors = []
         for n in MooreNeighborhood:
             c = coord + Coordinate(*n.value)
@@ -62,8 +60,5 @@ class Cell:
         neighbor = self.state.change_state(self.neighbors, matrix)
         if neighbor is not None:
             old_state = self.state
-            old_color = self.color
-            self.color = matrix[neighbor.y][neighbor.x].color
             self.state = matrix[neighbor.y][neighbor.x].state
-            matrix[neighbor.y][neighbor.x].color = old_color
             matrix[neighbor.y][neighbor.x].state = old_state

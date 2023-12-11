@@ -25,7 +25,7 @@ class Element(Cell):
     """
 
     def __init__(
-        self, coord: Coordinate, max_coord: Coordinate, state: CellState, color: str
+        self, coord: Coordinate, max_coord: Coordinate, state: CellState
     ) -> None:
         """Initializes an instance of the Element class
 
@@ -36,7 +36,11 @@ class Element(Cell):
             color (str): The color of the cell. Hex or standard color names are acceptable here
 
         """
-        super().__init__(coord, max_coord, state, color)
+        super().__init__(coord, max_coord, state)
+
+    @property
+    def color(self):
+        return self.state.color
 
 
 class ElementType:
@@ -69,9 +73,8 @@ class Empty(Element, ElementType):
 
         """
 
-        state = cell_state.Empty(weight=0)
-        color = "black"
-        super().__init__(coord, max_coord, state, color)
+        state = cell_state.Empty(weight=0, color="black")
+        super().__init__(coord, max_coord, state)
 
 
 class Sand(Element, ElementType):
@@ -96,9 +99,9 @@ class Sand(Element, ElementType):
 
         """
 
-        state = cell_state.MovableSolid(weight=2)
         color = SAND_COLORS[randint(0, len(SAND_COLORS) - 1)]
-        super().__init__(coord, max_coord, state, color)
+        state = cell_state.MovableSolid(weight=2, color=color)
+        super().__init__(coord, max_coord, state)
 
 
 class Water(Element, ElementType):
@@ -123,6 +126,6 @@ class Water(Element, ElementType):
 
         """
 
-        state = cell_state.Liquid(weight=1)
         color = WATER_COLORS[randint(0, len(WATER_COLORS) - 1)]
-        super().__init__(coord, max_coord, state, color)
+        state = cell_state.Liquid(weight=1, color=color)
+        super().__init__(coord, max_coord, state)

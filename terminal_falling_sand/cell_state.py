@@ -14,13 +14,14 @@ class CellState:
                       attr can vary between subclasses
     """
 
-    def __init__(self, weight: int) -> None:
+    def __init__(self, weight: int, color: str) -> None:
         """Initializes an instance of the CellState class
 
         Args:
             weight (int): The weight of the cell
         """
         self.weight = weight
+        self.color = color
 
     def change_state(self, neighbors: Neighbors, matrix: list) -> Optional[Coordinate]:
         """Dictates the behavior of a cell's state
@@ -43,14 +44,14 @@ class Empty(CellState):
         weight (int): The cell's weight
     """
 
-    def __init__(self, weight: int) -> None:
+    def __init__(self, weight: int, color: str) -> None:
         """Initializes an instance of the Empty class
 
         Args:
             weight (int): The weight of the cell
 
         """
-        super().__init__(weight)
+        super().__init__(weight, color)
 
     def change_state(self, neighbors: Neighbors, matrix: list) -> Optional[Coordinate]:
         """Defines the behavior of the Empty cell
@@ -69,7 +70,7 @@ class MovableSolid(CellState):
         weight (int): The weight of the cell
     """
 
-    def __init__(self, weight: int):
+    def __init__(self, weight: int, color: str):
         """Initializes an instance of the MovableSolid class
 
         Args:
@@ -77,7 +78,7 @@ class MovableSolid(CellState):
 
         """
 
-        super().__init__(weight)
+        super().__init__(weight, color)
 
     def change_state(self, neighbors: Neighbors, matrix: list) -> Optional[Coordinate]:
         """Defines the behavior of a MovableSolid
@@ -115,14 +116,14 @@ class Liquid(CellState):
         weight (int): The weight of the cell
     """
 
-    def __init__(self, weight: int):
+    def __init__(self, weight: int, color: str):
         """Initializes an instance of the Liquid class
 
         Args:
             weight (int): The weight of the cell
 
         """
-        super().__init__(weight)
+        super().__init__(weight, color)
 
     def change_state(self, neighbors: Neighbors, matrix: list) -> Optional[Coordinate]:
         """Defines the behavior of a Liquid

@@ -13,8 +13,7 @@ class Cell:
     Attributes:
         coord (Coordinate): The coordinate of the cell
         max_coord (Coordinate): The maximum possible coordinate for a cell. Used to identify valid neighbors
-        state (CellState): The CellState we should defer to for a cell's behavior
-        color (str): The color of the cell. Hex or standard color names are acceptable here
+        _neighbors (dict[str, Coordinate]): A dictionary of MooreNeighboorhood enum variants to their respective coord
     """
 
     def __init__(
@@ -24,6 +23,14 @@ class Cell:
         state: CellState,
         color: str,
     ):
+        """Initializes an instance of Cell
+
+        Args:
+            coord (Coordinate): The coordinate of the cell
+            max_coord (Coordinate): The maximum possible coordinate for a cell. Used to identify valid neighbors
+            state (CellState): The CellState we should defer to for a cell's behavior
+            color (str): The color of the cell. Hex or standard color names are acceptable here
+        """
         self.coord = coord
         self.state = state
         self.color = color

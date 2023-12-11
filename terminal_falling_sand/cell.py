@@ -1,8 +1,22 @@
+"""Hosts the base Cell class used in the simulation"""
+
 from .cell_state import State
 from .coordinates import Coordinate, MooreNeighborhood
 
 
 class Cell:
+    """This class acts as the base Cell class for the simulation
+
+    All cells participating in the CellMatrix simulation should ultimatleyb e derived from this class. Refer to the
+    'elements' module for the public facing API (the details of an element should be defined there)
+
+    Attributes:
+        coord (Coordinate): The coordinate of the cell
+        max_coord (Coordinate): The maximum possible coordinate for a cell. Used to identify valid neighbors
+        state (CellState): The CellState we should defer to for a cell's behavior
+        color (str): The color of the cell. Hex or standard color names are acceptable here
+    """
+
     def __init__(
         self,
         coord: Coordinate,

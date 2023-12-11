@@ -1,5 +1,4 @@
-import random
-from .elements import ElementType, Empty, Water, Sand
+from .elements import ElementType, Empty
 from rich.console import Console, ConsoleOptions
 from rich.style import Style
 from rich.segment import Segment

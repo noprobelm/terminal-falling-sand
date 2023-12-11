@@ -1,4 +1,5 @@
 """Main entrypoint for running the falling sand simulation"""
+
 import random
 from time import sleep
 from typing import Optional
@@ -23,6 +24,7 @@ def simulate(
         matrix (CellMatrix): The matrix to run a simulation on
         refresh_per_second (Optional[int]): The refresh rate for the simulation. Set to 'None' to remove rate constraint
         render (Optional[bool]): Whether we should render the simulation to the terminal or not
+
     """
 
     if refresh_per_second is not None:
@@ -55,6 +57,7 @@ def build_grid(xmax: int, ymax: int) -> CellMatrix:
 
     Returns:
         CellMatrix
+
     """
 
     return CellMatrix(xmax, ymax)
@@ -66,6 +69,7 @@ def main() -> None:
     - Sets an xmax/ymax based on the invoking terminal's dimensions, then builds a grid based on these values.
     - Spawns in various elements to participate in the simulation
     - Runs the simulate method using default args
+
     """
 
     console = Console()

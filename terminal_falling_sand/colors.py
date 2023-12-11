@@ -1,3 +1,5 @@
+"""Common colors used for cells"""
+
 SAND_COLORS = [
     "#f8f5f1",
     "#f5f1ec",

@@ -1,3 +1,5 @@
+"""Hosts the CellMatrix class used to run the simulation"""
+
 from typing import Type
 
 from rich.console import Console, ConsoleOptions

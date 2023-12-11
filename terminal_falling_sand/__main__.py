@@ -8,15 +8,25 @@ from .elements import Water, Sand
 import random
 
 
-def terminal_render(grid: CellMatrix, refresh_per_second: Optional[int] = None):
+def simulate(
+    grid: CellMatrix,
+    refresh_per_second: Optional[int] = None,
+    render: Optional[bool] = True,
+):
     if refresh_per_second is not None:
         refresh_rate = 1 / refresh_per_second
     else:
         refresh_rate = 0
-    with Live(grid, screen=True, auto_refresh=False) as live:
+
+    if render is True:
+        with Live(grid, screen=True, auto_refresh=False) as live:
+            while True:
+                grid.step()
+                live.update(grid, refresh=True)
+                sleep(refresh_rate)
+    else:
         while True:
             grid.step()
-            live.update(grid, refresh=True)
             sleep(refresh_rate)
 
 
@@ -44,7 +54,7 @@ def main():
             if random.randint(0, 1) == 1:
                 grid.spawn(Water, x, y)
 
-    terminal_render(grid, 60)
+    simulate(grid, 60)
 
 
 if __name__ == "__main__":

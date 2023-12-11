@@ -1,9 +1,10 @@
 import random
-from . import elements
+from .elements import ElementType, Empty, Water, Sand
 from rich.console import Console, ConsoleOptions
 from rich.style import Style
 from rich.segment import Segment
 from .coordinates import Coordinate
+from typing import Type
 
 
 class CellMatrix(list):
@@ -18,15 +19,12 @@ class CellMatrix(list):
             matrix.append([])
             for x in range(xmax):
                 coord = Coordinate(x, y)
-                matrix[coord.y].append(elements.Empty(coord, self.max_coord))
+                matrix[coord.y].append(Empty(coord, self.max_coord))
         super().__init__(matrix)
 
-    def fill_random(self, chance: int, rx: range, ry: range) -> None:
-        for x in rx:
-            for y in ry:
-                if random.randint(1, chance) == chance:
-                    coord = Coordinate(x, y)
-                    self[coord.y][coord.x] = elements.Sand(coord, self.max_coord)
+    def spawn(self, element: Type[ElementType], x: int, y: int):
+        coord = Coordinate(x, y)
+        self[y][x] = element(coord, self.max_coord)
 
     def step(self):
         for y in range(self.max_coord.y + 1):

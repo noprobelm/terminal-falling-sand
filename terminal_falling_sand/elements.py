@@ -13,21 +13,26 @@ class Element(Cell):
         super().__init__(coord, max_coord, state, color)
 
 
-class Empty(Element):
+class ElementType:
+    def __init__(self, *args, **kwargs):
+        pass
+
+
+class Empty(Element, ElementType):
     def __init__(self, coord: Coordinate, max_coord: Coordinate):
         state = cell_state.Empty(weight=0)
         color = "black"
         super().__init__(coord, max_coord, state, color)
 
 
-class Sand(Element):
+class Sand(Element, ElementType):
     def __init__(self, coord: Coordinate, max_coord: Coordinate):
         state = cell_state.MovableSolid(weight=2)
         color = SAND_COLORS[randint(0, len(SAND_COLORS) - 1)]
         super().__init__(coord, max_coord, state, color)
 
 
-class Water(Element):
+class Water(Element, ElementType):
     def __init__(self, coord: Coordinate, max_coord: Coordinate):
         state = cell_state.Liquid(weight=1)
         color = WATER_COLORS[randint(0, len(WATER_COLORS) - 1)]

@@ -1,8 +1,11 @@
+import random
 from .matrix import CellMatrix
 from rich.console import Console
 from rich.live import Live
 from time import sleep
 from typing import Optional
+from .elements import Water, Sand
+import random
 
 
 def terminal_render(grid: CellMatrix, refresh_per_second: Optional[int] = None):
@@ -26,7 +29,20 @@ def main():
     xmax = console.width
     ymax = console.height * 2
     grid = build_grid(console.width, console.height * 2)
-    grid.fill_random(2, range(xmax // 4, int(xmax * 0.75)), range(ymax))
+    for x in range(xmax // 4, int(xmax * 0.5)):
+        for y in range(int(ymax * 0.6), ymax):
+            if random.randint(0, 1) == 1:
+                grid.spawn(Sand, x, y)
+
+    for x in range(int(xmax * 0.5), int(xmax * 0.75)):
+        for y in range(int(ymax * 0.4), int(ymax * 0.6)):
+            if random.randint(0, 1) == 1:
+                grid.spawn(Sand, x, y)
+
+    for x in range(xmax // 4, int(xmax * 0.5)):
+        for y in range(int(ymax * 0.4), int(ymax * 0.6)):
+            if random.randint(0, 1) == 1:
+                grid.spawn(Water, x, y)
 
     terminal_render(grid, 60)
 

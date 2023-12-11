@@ -1,3 +1,9 @@
+"""This module defines elements used directly by the CellMatrix simulation
+
+The elements found in this module are derived from the Cell class. The CellMatrix simulation should consist only of
+elements from this module
+"""
+
 from random import randint
 
 from . import cell_state

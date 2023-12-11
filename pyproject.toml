@@ -17,4 +17,4 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-'main' = 'terminal_falling_sand.__main__:main'
+'tfs' = 'terminal_falling_sand.__main__:main'

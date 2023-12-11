@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 from random import randint
+from typing import Optional
+from .coordinates import Coordinate
 
 
 class CellState:
@@ -14,26 +16,89 @@ class CellState:
     """
 
     def __init__(self, weight: int) -> None:
+        """Initializes an instance of the CellState class
+
+        Args:
+            weight (int): The weight of the cell
+        """
         self.weight = weight
 
-    def change_state(self, neighbors: dict[str, CellState]) -> None:
+    def change_state(
+        self, neighbors: dict[str, CellState]
+    ) -> Optional[tuple[Coordinate, CellState]]:
+        """Dictates the behavior of a cell's state
+
+        This should be filled out in subclass instances to dictate the desired behavior of a cell
+
+        If a cell changes state, the cell it's swapping with should be returned as a tuple of its coordinates and state
+
+        Args:
+            neighbors (dict[str, CellState]): A map of MooreNeighborhood variants to their respective cell's state
+        """
         return
 
 
 class Empty(CellState):
-    def __init__(self, weight: int):
+    """Placeholder for empty values in a CellMatrix simulation.
+
+    This is functionally equivalent to the CellState class, but should preferred when representing Empty cells
+
+    Attributes:
+        weight (int): The cell's weight
+    """
+
+    def __init__(self, weight: int) -> None:
+        """Initializes an instance of the Empty class
+
+        Args:
+            weight (int): The weight of the cell
+
+        """
         self.weight = weight
         pass
 
-    def change_state(self, neighbors: dict):
-        return None
+    def change_state(self, neighbors: dict[str, CellState]) -> None:
+        """Defines the behavior of the Empty cell
+
+        The 'Empty' CellState has no behavior
+
+        Args:
+            neighbors (dict[str, CellState]): A map of MooreNeighborhood variants to their respective cell's state
+        """
+
+        return
 
 
 class MovableSolid(CellState):
+    """Defines behavior for movable solids
+
+    Args:
+        weight (int): The weight of the cell
+    """
+
     def __init__(self, weight: int):
+        """Initializes an instance of the MovableSolid class
+
+        Args:
+            weight (int): The weight of the cell
+
+        """
+
         self.weight = weight
 
-    def change_state(self, neighbors: dict):
+    def change_state(self, neighbors: dict) -> Optional[tuple[Coordinate, CellState]]:
+        """Defines the behavior of a MovableSolid
+
+        A MovableSolid's behavior can be defined as:
+            - If it weighs more than the cell below it, swap states
+            - Else if it weighs more than the cells below and diagonally left and right, pick one at random to swap with
+            - Else if it weighs more than of the neighbors below and diagonally left and right, swap states
+            - Else, retain state. Return None
+
+        Args:
+            neighbors (dict[str, CellState]): A map of MooreNeighborhood variants to their respective cell's state
+        """
+
         if (
             "LOWER" in neighbors.keys()
             and self.weight > neighbors["LOWER"].state.weight

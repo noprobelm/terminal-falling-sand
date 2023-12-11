@@ -88,7 +88,7 @@ def main() -> None:
             if random.randint(0, 1) == 1:
                 grid.spawn(Water, x, y)
 
-    simulate(grid)
+    simulate(grid, render=True)
 
 
 if __name__ == "__main__":

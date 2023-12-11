@@ -1,9 +1,9 @@
 """Hosts the base Cell class used in the simulation"""
 
-from __future__ import annotations
 
 from .cell_state import CellState
 from .coordinates import Coordinate, MooreNeighborhood
+from typing import Optional
 
 
 class Cell:
@@ -13,8 +13,6 @@ class Cell:
     'elements' module for the public facing API (the details of an element should be defined there)
 
     Attributes:
-        coord (Coordinate): The coordinate of the cell
-        max_coord (Coordinate): The maximum possible coordinate for a cell. Used to identify valid neighbors
         state (CellState): The state a cell is in
         color (str): The color of a cell
         _neighbors (dict[str, Coordinate]): A dictionary of MooreNeighboorhood enum variants to their respective coord
@@ -35,16 +33,15 @@ class Cell:
             state (CellState): The CellState we should defer to for a cell's behavior
             color (str): The color of the cell. Hex or standard color names are acceptable here
         """
-        self.coord = coord
         self.state = state
         self.color = color
         self._neighbors = {}
         for n in MooreNeighborhood:
-            c = self.coord + Coordinate(*n.value)
+            c = coord + Coordinate(*n.value)
             if (0 <= c.x <= max_coord.x) and (0 <= c.y <= max_coord.y):
                 self._neighbors[n.name] = c
 
-    def change_state(self, matrix: list) -> None:
+    def change_state(self, matrix: list) -> Optional[Coordinate]:
         """Steps the cell forward based on the parameters of its neighbors
 
         If the cell's state changes, swap its color and state with the target neighbor.
@@ -52,19 +49,11 @@ class Cell:
         Args:
             matrix (list): The underlying list element of the CellMatrix
         """
-        neighbors = {}
-        for n in self._neighbors:
-            c = self._neighbors[n]
-            neighbors[n] = matrix[c.y][c.x]
-
-        new = self.state.change_state(neighbors)
-        if new:
-            old_color = self.color
-            new_color = matrix[new[0].y][new[0].x].color
+        neighbor = self.state.change_state(self._neighbors, matrix)
+        if neighbor:
             old_state = self.state
-
-            matrix[self.coord.y][self.coord.x].color = new_color
-            matrix[self.coord.y][self.coord.x].state = new[1]
-
-            matrix[new[0].y][new[0].x].color = old_color
-            matrix[new[0].y][new[0].x].state = old_state
+            old_color = self.color
+            self.color = matrix[neighbor.y][neighbor.x].color
+            self.state = matrix[neighbor.y][neighbor.x].state
+            matrix[neighbor.y][neighbor.x].color = old_color
+            matrix[neighbor.y][neighbor.x].state = old_state

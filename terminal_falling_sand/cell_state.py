@@ -1,7 +1,5 @@
 """Hosts the CellState class and its various subclasses"""
 
-from __future__ import annotations
-
 from random import randint
 from typing import Optional
 
@@ -24,9 +22,16 @@ class CellState:
         """
         self.weight = weight
 
+    def _map_neighbor_states(self, neighbors: dict[str, Coordinate], matrix):
+        neighbor_states = {}
+        for n in neighbors:
+            c = neighbors[n]
+            neighbor_states[n] = matrix[c.y][c.x].state
+        return neighbor_states
+
     def change_state(
-        self, neighbors: dict[str, CellState]
-    ) -> Optional[tuple[Coordinate, CellState]]:
+        self, neighbors: dict[str, Coordinate], matrix: list
+    ) -> Optional[Coordinate]:
         """Dictates the behavior of a cell's state
 
         This should be filled out in subclass instances to dictate the desired behavior of a cell
@@ -36,7 +41,6 @@ class CellState:
         Args:
             neighbors (dict[str, CellState]): A map of MooreNeighborhood variants to their respective cell's state
         """
-        return
 
 
 class Empty(CellState):
@@ -58,7 +62,9 @@ class Empty(CellState):
         self.weight = weight
         pass
 
-    def change_state(self, neighbors: dict[str, CellState]) -> None:
+    def change_state(
+        self, neighbors: dict[str, Coordinate], matrix: list
+    ) -> Optional[Coordinate]:
         """Defines the behavior of the Empty cell
 
         The 'Empty' CellState has no behavior
@@ -66,8 +72,6 @@ class Empty(CellState):
         Args:
             neighbors (dict[str, CellState]): A map of MooreNeighborhood variants to their respective cell's state
         """
-
-        return
 
 
 class MovableSolid(CellState):
@@ -87,7 +91,9 @@ class MovableSolid(CellState):
 
         self.weight = weight
 
-    def change_state(self, neighbors: dict) -> Optional[tuple[Coordinate, CellState]]:
+    def change_state(
+        self, neighbors: dict[str, Coordinate], matrix: list
+    ) -> Optional[Coordinate]:
         """Defines the behavior of a MovableSolid
 
         A MovableSolid's behavior can be defined as:
@@ -100,38 +106,34 @@ class MovableSolid(CellState):
             neighbors (dict[str, CellState]): A map of MooreNeighborhood variants to their respective cell's state
         """
 
-        if (
-            "LOWER" in neighbors.keys()
-            and self.weight > neighbors["LOWER"].state.weight
-        ):
-            n = neighbors["LOWER"]
+        neighbor_states = self._map_neighbor_states(neighbors, matrix)
+        if "LOWER" in neighbor_states and self.weight > neighbor_states["LOWER"].weight:
+            return neighbors["LOWER"]
 
         elif (
-            "LOWER_LEFT" in neighbors.keys()
-            and "LOWER_RIGHT" in neighbors.keys()
-            and self.weight > neighbors["LOWER_LEFT"].state.weight
-            and self.weight > neighbors["LOWER_RIGHT"].state.weight
+            "LOWER_LEFT" in neighbor_states
+            and "LOWER_RIGHT" in neighbor_states
+            and self.weight > neighbor_states["LOWER_LEFT"].weight
+            and self.weight > neighbor_states["LOWER_RIGHT"].weight
         ):
-            candidates = [neighbors["LOWER_LEFT"], neighbors["LOWER_RIGHT"]]
-            n = candidates[randint(0, 1)]
+            neighbor = ["LOWER_LEFT", "LOWER_RIGHT"][randint(0, 1)]
+            return neighbors[neighbor]
 
         elif (
-            "LOWER_LEFT" in neighbors.keys()
-            and self.weight > neighbors["LOWER_LEFT"].state.weight
+            "LOWER_LEFT" in neighbor_states
+            and self.weight > neighbor_states["LOWER_LEFT"].weight
         ):
-            n = neighbors["LOWER_LEFT"]
+            return neighbors["LOWER_LEFT"]
 
         elif (
-            "LOWER_RIGHT" in neighbors.keys()
-            and self.weight > neighbors["LOWER_RIGHT"].state.weight
+            "LOWER_RIGHT" in neighbor_states
+            and self.weight > neighbor_states["LOWER_RIGHT"].weight
         ):
-            n = neighbors["LOWER_RIGHT"]
+            return neighbors["LOWER_RIGHT"]
         else:
             return None
 
-        state = n.state
-
-        return (n.coord, state)
+        return neighbors[neighbor]
 
 
 class Liquid(CellState):
@@ -150,7 +152,9 @@ class Liquid(CellState):
         """
         self.weight = weight
 
-    def change_state(self, neighbors: dict) -> Optional[tuple[Coordinate, CellState]]:
+    def change_state(
+        self, neighbors: dict[str, Coordinate], matrix: list
+    ) -> Optional[Coordinate]:
         """Defines the behavior of a Liquid
 
         A MovableSolid's behavior can be defined as:
@@ -162,55 +166,45 @@ class Liquid(CellState):
             neighbors (dict[str, CellState]): A map of MooreNeighborhood variants to their respective cell's state
         """
 
-        if (
-            "LOWER" in neighbors.keys()
-            and self.weight > neighbors["LOWER"].state.weight
-        ):
-            n = neighbors["LOWER"]
+        neighbor_states = self._map_neighbor_states(neighbors, matrix)
+
+        if "LOWER" in neighbor_states and self.weight > neighbor_states["LOWER"].weight:
+            return neighbors["LOWER"]
 
         elif (
-            "LOWER_LEFT" in neighbors.keys()
-            and "LOWER_RIGHT" in neighbors.keys()
-            and self.weight > neighbors["LOWER_LEFT"].state.weight
-            and self.weight > neighbors["LOWER_RIGHT"].state.weight
+            "LOWER_LEFT" in neighbor_states
+            and "LOWER_RIGHT" in neighbor_states
+            and self.weight > neighbor_states["LOWER_LEFT"].weight
+            and self.weight > neighbor_states["LOWER_RIGHT"].weight
         ):
-            candidates = [neighbors["LOWER_LEFT"], neighbors["LOWER_RIGHT"]]
-            n = candidates[randint(0, 1)]
+            neighbor = ["LOWER_LEFT", "LOWER_RIGHT"][randint(0, 1)]
+            return neighbors[neighbor]
 
         elif (
-            "LOWER_LEFT" in neighbors.keys()
-            and self.weight > neighbors["LOWER_LEFT"].state.weight
+            "LOWER_LEFT" in neighbor_states
+            and self.weight > neighbor_states["LOWER_LEFT"].weight
         ):
-            n = neighbors["LOWER_LEFT"]
+            return neighbors["LOWER_LEFT"]
 
         elif (
-            "LOWER_RIGHT" in neighbors.keys()
-            and self.weight > neighbors["LOWER_RIGHT"].state.weight
+            "LOWER_RIGHT" in neighbor_states
+            and self.weight > neighbor_states["LOWER_RIGHT"].weight
         ):
-            n = neighbors["LOWER_RIGHT"]
+            return neighbors["LOWER_RIGHT"]
 
         elif (
-            "LEFT" in neighbors.keys()
-            and "RIGHT" in neighbors.keys()
-            and self.weight > neighbors["LEFT"].state.weight
-            and self.weight > neighbors["RIGHT"].state.weight
+            "LEFT" in neighbor_states
+            and "RIGHT" in neighbor_states
+            and self.weight > neighbor_states["LEFT"].weight
+            and self.weight > neighbor_states["RIGHT"].weight
         ):
-            candidates = [neighbors["LEFT"], neighbors["RIGHT"]]
-            n = candidates[randint(0, 1)]
+            neighbor = ["LEFT", "RIGHT"][randint(0, 1)]
+            return neighbors[neighbor]
+
+        elif "LEFT" in neighbor_states and self.weight > neighbor_states["LEFT"].weight:
+            return neighbors["LEFT"]
 
         elif (
-            "LEFT" in neighbors.keys() and self.weight > neighbors["LEFT"].state.weight
+            "RIGHT" in neighbor_states and self.weight > neighbor_states["RIGHT"].weight
         ):
-            n = neighbors["LEFT"]
-
-        elif "RIGHT" in neighbors.keys() and isinstance(
-            neighbors["RIGHT"].state, Empty
-        ):
-            n = neighbors["RIGHT"]
-
-        else:
-            return None
-
-        state = n.state
-
-        return (n.coord, state)
+            return neighbors["RIGHT"]

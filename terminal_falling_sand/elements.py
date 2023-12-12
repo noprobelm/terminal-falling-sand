@@ -17,11 +17,8 @@ class Element(Cell):
     """Base class for an element
 
     Attributes:
-        coord (Coordinate): The coordinate of the cell
-        max_coord (Coordinate): The maximum possible coordinate for a cell. Used to identify valid neighbors
         state (CellState): The state a cell is in
-        color (str): The color of a cell
-        _neighbors (dict[str, Coordinate]): A dictionary of MooreNeighboorhood enum variants to their respective coord
+
     """
 
     def __init__(
@@ -50,8 +47,6 @@ class Empty(Element, ElementType):
     """An Empty element
 
     Attributes:
-        coord (Coordinate): The coordinate of the cell
-        max_coord (Coordinate): The maximum possible coordinate for a cell. Used to identify valid neighbors
         state (CellState): The state a cell is in
 
     """
@@ -75,8 +70,6 @@ class Sand(Element, ElementType):
     """A Sand element
 
     Attributes:
-        coord (Coordinate): The coordinate of the cell
-        max_coord (Coordinate): The maximum possible coordinate for a cell. Used to identify valid neighbors
         state (CellState): The state a cell is in
 
     """
@@ -101,8 +94,6 @@ class Water(Element, ElementType):
     """A Water element
 
     Attributes:
-        coord (Coordinate): The coordinate of the cell
-        max_coord (Coordinate): The maximum possible coordinate for a cell. Used to identify valid neighbors
         state (CellState): The state a cell is in
 
     """

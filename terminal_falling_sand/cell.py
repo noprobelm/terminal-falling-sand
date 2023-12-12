@@ -50,12 +50,6 @@ class Cell:
         Args:
             matrix (list): The underlying list element of the CellMatrix
         """
-        states = []
-        for n in self.neighbors:
-            if n is not None:
-                states.append(matrix[n.y][n.x])
-            else:
-                states.append(None)
 
         neighbor = self.state.change_state(self.neighbors, matrix)
         if neighbor is not None:

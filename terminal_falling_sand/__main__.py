@@ -13,7 +13,7 @@ from .matrix import CellMatrix
 
 def simulate(
     matrix: CellMatrix,
-    refresh_per_second: Optional[int] = 60,
+    refresh_per_second: int = 60,
     render: Optional[bool] = True,
 ) -> None:
     """Main entrypoint for the simulation
@@ -26,7 +26,7 @@ def simulate(
         render (Optional[bool]): Whether we should render the simulation to the terminal or not
 
     """
-    if refresh_per_second is not None:
+    if refresh_per_second > 0:
         refresh_rate = 1 / refresh_per_second
     else:
         refresh_rate = 0

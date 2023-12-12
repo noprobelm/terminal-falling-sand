@@ -37,21 +37,6 @@ class Element(Cell):
         """
         super().__init__(coord, max_coord, state)
 
-    @property
-    def ignore(self):
-        """Interface for state.ignore"""
-        return self.state.ignore
-
-    @property
-    def color(self):
-        """Interface for state.color"""
-        return self.state.color
-
-    @property
-    def weight(self):
-        """Interface for state.weight"""
-        return self.state.weight
-
 
 class ElementType:
     """Reserved for type hinting Element types in the CellMatrix class from the cell_matrix module"""

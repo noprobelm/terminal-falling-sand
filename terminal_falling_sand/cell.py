@@ -33,8 +33,8 @@ class Cell:
         """
         self.state = state
         neighbors = []
-        for n in MooreNeighborhood:
-            c = coord + Coordinate(*n.value)
+        for nc in MooreNeighborhood:
+            c = coord + nc.value
             if (0 <= c.x <= max_coord.x) and (0 <= c.y <= max_coord.y):
                 neighbors.append(c)
             else:

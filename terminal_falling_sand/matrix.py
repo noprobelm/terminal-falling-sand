@@ -46,17 +46,15 @@ class CellMatrix(list):
                 matrix[coord.y].append(Empty(coord, self.max_coord))
         super().__init__(matrix)
 
-    def spawn(self, element: Type[ElementType], x: int, y: int) -> None:
+    def spawn(self, element: Type[ElementType], coord: Coordinate) -> None:
         """Spawns an element at a given x/y coordinate
 
         Args:
             element (ElementType): An 'ElementType' type
-            x (int): The x coordinate of the element to be spawned
-            y (int): The y coordinate of the element to be spawned
+            coord (Coordinate): The coordinate to spawn the element at
         """
 
-        coord = Coordinate(x, y)
-        self[y][x] = element(coord, self.max_coord)
+        self[coord.y][coord.x] = element(coord, self.max_coord)
 
     def step(self) -> None:
         """Steps the simulation forward once

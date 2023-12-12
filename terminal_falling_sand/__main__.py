@@ -7,6 +7,7 @@ from typing import Optional
 from rich.console import Console
 from rich.live import Live
 
+from .coordinates import Coordinate
 from .elements import Sand, Water
 from .matrix import CellMatrix
 
@@ -33,12 +34,12 @@ def simulate(
 
     if render is True:
         with Live(matrix, screen=True, auto_refresh=False) as live:
-            while True
+            while True:
                 matrix.step()
                 live.update(matrix, refresh=True)
                 sleep(refresh_rate)
     else:
-        while True
+        while True:
             matrix.step()
             sleep(refresh_rate)
 
@@ -76,17 +77,20 @@ def main() -> None:
     for x in range(xmax // 4, int(xmax * 0.5)):
         for y in range(int(ymax * 0.6), ymax):
             if random.randint(0, 1) == 1:
-                grid.spawn(Sand, x, y)
+                c = Coordinate(x, y)
+                grid.spawn(Sand, c)
 
     for x in range(int(xmax * 0.5), int(xmax * 0.75)):
         for y in range(int(ymax * 0.4), int(ymax * 0.6)):
             if random.randint(0, 1) == 1:
-                grid.spawn(Sand, x, y)
+                c = Coordinate(x, y)
+                grid.spawn(Sand, c)
 
     for x in range(xmax // 4, int(xmax * 0.5)):
         for y in range(int(ymax * 0.4), int(ymax * 0.6)):
             if random.randint(0, 1) == 1:
-                grid.spawn(Water, x, y)
+                c = Coordinate(x, y)
+                grid.spawn(Water, c)
 
     simulate(grid, render=True)
 

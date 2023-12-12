@@ -40,14 +40,17 @@ class Element(Cell):
 
     @property
     def ignore(self):
+        """Interface for state.ignore"""
         return self.state.ignore
 
     @property
     def color(self):
+        """Interface for state.color"""
         return self.state.color
 
     @property
     def weight(self):
+        """Interface for state.weight"""
         return self.state.weight
 
 

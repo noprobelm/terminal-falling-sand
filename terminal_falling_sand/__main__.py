@@ -43,7 +43,7 @@ def simulate(
             sleep(refresh_rate)
 
 
-def build_grid(xmax: int, ymax: int) -> CellMatrix:
+def build_matrix(xmax: int, ymax: int) -> CellMatrix:
     """Builds a grid based on x and y constraints
 
     Args:

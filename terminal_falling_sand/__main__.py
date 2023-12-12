@@ -72,7 +72,7 @@ def main() -> None:
     console = Console()
     xmax = console.width
     ymax = console.height * 2
-    grid = build_grid(console.width, console.height * 2)
+    grid = build_matrix(console.width, console.height * 2)
     for x in range(xmax // 4, int(xmax * 0.5)):
         for y in range(int(ymax * 0.6), ymax):
             if random.randint(0, 1) == 1:

@@ -72,6 +72,43 @@ class Empty(CellState):
         """
 
 
+class Solid(CellState):
+    """Defines behavior for movable solids
+
+    Attributes:
+        weight (int): The cell's weight
+        color (str): The color to render the cell as
+        ignore (bool): Should the change_state method run
+    """
+
+    def __init__(self, weight: int, color: str):
+        """Initializes an instance of the MovableSolid class
+
+        Args:
+            weight (int): The weight of the cell
+            color (str): The color of the cell
+
+        """
+
+        super().__init__(weight, color)
+
+    def change_state(self, neighbors: Neighbors, matrix: list) -> Optional[Coordinate]:
+        """Defines the behavior of a MovableSolid
+
+        A MovableSolid's behavior can be defined as:
+            - If it weighs more than the cell below it, swap states
+            - Else if it weighs more than the cells below and diagonally left and right, pick one at random to swap with
+            - Else if it weighs more than of the neighbors below and diagonally left and right, swap states
+            - Else, retain state. Return None
+
+        Args:
+            neighbors (dict[str, CellState]): A map of MooreNeighborhood variants to their respective cell's state
+        """
+
+        if neighbors.LOWER is not None and self.weight > matrix[n.y][n.x].weight:
+            return neighbors.LOWER
+
+
 class MovableSolid(CellState):
     """Defines behavior for movable solids
 

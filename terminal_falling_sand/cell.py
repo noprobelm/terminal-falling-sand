@@ -1,8 +1,10 @@
 """Hosts the base Cell class used in the simulation"""
 
-from .cell_state import CellState
-from .coordinates import Coordinate, MooreNeighborhood, Neighbors, NeighborStates
 from typing import Optional
+
+from .cell_state import CellState
+from .coordinates import (Coordinate, MooreNeighborhood, Neighbors,
+                          NeighborStates)
 
 
 class Cell:

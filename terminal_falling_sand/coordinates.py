@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
+from collections import namedtuple
 from dataclasses import dataclass
 from enum import Enum
-from collections import namedtuple
 
 
 class MooreNeighborhood(Enum):

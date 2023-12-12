@@ -13,9 +13,8 @@ class Cell:
     'elements' module for the public facing API (the details of an element should be defined there)
 
     Attributes:
-        state (CellState): The state a cell is in
-        color (str): The color of a cell
-        _neighbors (dict[str, Coordinate]): A dictionary of MooreNeighboorhood enum variants to their respective coord
+        state (CellState): The state the cell is in
+        neighbors (Neighbors): Stores MooreNeighboorhood enum variants to their respective coord
     """
 
     def __init__(
@@ -49,7 +48,7 @@ class Cell:
         If the cell's state changes, swap its color and state with the target neighbor.
 
         Args:
-            matrix (list): The underlying list element of the CellMatrix
+            matrix (list): The underlying list of elements found in the CellMatrix
         """
 
         neighbor = self.state.change_state(self.neighbors, matrix)

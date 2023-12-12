@@ -9,7 +9,7 @@ from random import randint
 from . import cell_state
 from .cell import Cell
 from .cell_state import CellState
-from .colors import SAND_COLORS, WATER_COLORS
+from .colors import SAND_COLORS, WATER_COLORS, ROCK_COLORS
 from .coordinate import Coordinate
 
 
@@ -63,6 +63,30 @@ class Empty(Element, ElementType):
         """
 
         state = cell_state.Empty(weight=0, color="black")
+        super().__init__(coord, max_coord, state)
+
+
+class Rock(Element, ElementType):
+    """A Sand element
+
+    Attributes:
+        state (CellState): The state a cell is in
+
+    """
+
+    def __init__(self, coord: Coordinate, max_coord: Coordinate):
+        """Initializes an instance of the Sand class
+
+        - A Rock cell's color is set to one of those found among the ROCK_COLORS dict
+
+        Args:
+            coord (Coordinate): The coordinate of the cell
+            max_coord (Coordinate): The maximum possible coordinate for a cell. Used to identify valid neighbors
+
+        """
+
+        color = ROCK_COLORS[randint(0, len(ROCK_COLORS) - 1)]
+        state = cell_state.Solid(weight=3, color=color)
         super().__init__(coord, max_coord, state)
 
 

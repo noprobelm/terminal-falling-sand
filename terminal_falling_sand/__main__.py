@@ -92,6 +92,8 @@ def main() -> None:
                 c = Coordinate(x, y)
                 grid.spawn(Water, c)
 
+    simulate(grid, 60, render=True)
+
 
 if __name__ == "__main__":
     main()

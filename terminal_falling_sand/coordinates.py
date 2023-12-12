@@ -1,4 +1,7 @@
-"""The coordinate system used by the CellMatrix simulation"""
+"""The coordinate system used by the CellMatrix simulation
+
+Includes the Neighbors namedtuple, which is used in the cell and cell_state modules
+"""
 
 from __future__ import annotations
 

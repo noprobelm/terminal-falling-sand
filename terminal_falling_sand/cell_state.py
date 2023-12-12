@@ -22,6 +22,7 @@ class CellState:
         """
         self.weight = weight
         self.color = color
+        self.ignore = False
 
     def change_state(self, neighbors: Neighbors, matrix: list) -> Optional[Coordinate]:
         """Dictates the behavior of a cell's state
@@ -52,6 +53,7 @@ class Empty(CellState):
 
         """
         super().__init__(weight, color)
+        self.ignore = True
 
     def change_state(self, neighbors: Neighbors, matrix: list) -> Optional[Coordinate]:
         """Defines the behavior of the Empty cell
@@ -93,20 +95,21 @@ class MovableSolid(CellState):
             neighbors (dict[str, CellState]): A map of MooreNeighborhood variants to their respective cell's state
         """
 
-        for i in ["LOWER", ["LOWER_LEFT", "LOWER_RIGHT"], "LOWER_LEFT", "LOWER_RIGHT"]:
-            if isinstance(i, str):
-                c = getattr(neighbors, i)
-                if c is not None:
-                    state = matrix[c.y][c.x].state
-                    if self.weight > state.weight:
-                        return c
-            elif isinstance(i, list):
-                coords = [getattr(neighbors, k) for k in i]
-                if any(c is None for c in coords):
-                    continue
-                states = [matrix[k.y][k.x].state for k in coords]
-                if all(self.weight > state.weight for state in states):
-                    return coords[randint(0, 1)]
+        for i in [
+            neighbors.LOWER,
+            (neighbors.LOWER_LEFT, neighbors.LOWER_RIGHT),
+            neighbors.LOWER_LEFT,
+            neighbors.LOWER_RIGHT,
+        ]:
+            if isinstance(i, tuple):
+                candidates = []
+                for n in i:
+                    if n is not None and self.weight > matrix[n.y][n.x].weight:
+                        candidates.append(n)
+                    if len(candidates) == 2:
+                        return candidates[randint(0, 1)]
+            elif i is not None and self.weight > matrix[i.y][i.x].weight:
+                return i
 
 
 class Liquid(CellState):
@@ -137,23 +140,21 @@ class Liquid(CellState):
             neighbors (dict[str, CellState]): A map of MooreNeighborhood variants to their respective cell's state
         """
 
-        for neighbor in [
-            "LOWER",
-            ["LOWER_LEFT", "LOWER_RIGHT"],
-            "LOWER_LEFT",
-            "LOWER_RIGHT",
-            ["LEFT", "RIGHT"],
-            "LEFT",
-            "RIGHT",
+        for i in [
+            neighbors.LOWER,
+            (neighbors.LOWER_LEFT, neighbors.LOWER_RIGHT),
+            neighbors.LOWER_LEFT,
+            neighbors.LOWER_RIGHT,
+            (neighbors.LEFT, neighbors.RIGHT),
+            neighbors.LEFT,
+            neighbors.RIGHT,
         ]:
-            if isinstance(neighbor, str):
-                c = getattr(neighbors, neighbor)
-                if c is not None and self.weight > matrix[c.y][c.x].state.weight:
-                    return c
-            elif isinstance(neighbor, list):
-                coords = [getattr(neighbors, k) for k in neighbor]
-                if any(c is None for c in coords):
-                    continue
-                states = [matrix[c.y][c.x].state for c in coords]
-                if all(self.weight > state.weight for state in states):
-                    return coords[randint(0, 1)]
+            if isinstance(i, tuple):
+                candidates = []
+                for n in i:
+                    if n is not None and self.weight > matrix[n.y][n.x].weight:
+                        candidates.append(n)
+                    if len(candidates) == 2:
+                        return candidates[randint(0, 1)]
+            elif i is not None and self.weight > matrix[i.y][i.x].weight:
+                return i

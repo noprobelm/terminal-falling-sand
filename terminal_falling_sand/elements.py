@@ -39,8 +39,16 @@ class Element(Cell):
         super().__init__(coord, max_coord, state)
 
     @property
+    def ignore(self):
+        return self.state.ignore
+
+    @property
     def color(self):
         return self.state.color
+
+    @property
+    def weight(self):
+        return self.state.weight
 
 
 class ElementType:

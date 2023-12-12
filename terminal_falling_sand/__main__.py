@@ -33,12 +33,12 @@ def simulate(
 
     if render is True:
         with Live(matrix, screen=True, auto_refresh=False) as live:
-            while True:
+            while True
                 matrix.step()
                 live.update(matrix, refresh=True)
                 sleep(refresh_rate)
     else:
-        while True:
+        while True
             matrix.step()
             sleep(refresh_rate)
 

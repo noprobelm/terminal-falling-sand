@@ -6,6 +6,7 @@ from rich.console import Console, ConsoleOptions, RenderResult
 from rich.segment import Segment
 from rich.style import Style
 
+
 from .coordinates import Coordinate
 from .elements import ElementType, Empty
 
@@ -81,8 +82,9 @@ class CellMatrix(list):
                 self[self.max_coord.y - y][self.max_coord.x - x - self.midpoint]
                 for x in range(self.midpoint, self.max_coord.x + 1)
             )
-            for cell in change_order:
-                cell.change_state(self)
+            for element in change_order:
+                if not element.state.ignore:
+                    element.change_state(self)
 
     def __rich_console__(
         self, console: Console, options: ConsoleOptions

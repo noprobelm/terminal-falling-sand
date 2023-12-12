@@ -3,7 +3,7 @@
 from random import randint
 from typing import Optional
 
-from .coordinates import Coordinate, Neighbors
+from .coordinate import Coordinate, Neighbors
 
 
 class CellState:

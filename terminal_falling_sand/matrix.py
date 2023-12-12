@@ -6,7 +6,7 @@ from rich.console import Console, ConsoleOptions, RenderResult
 from rich.segment import Segment
 from rich.style import Style
 
-from .coordinates import Coordinate
+from .coordinate import Coordinate
 from .elements import ElementType, Empty
 
 

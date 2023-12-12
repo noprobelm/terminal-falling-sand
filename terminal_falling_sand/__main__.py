@@ -7,7 +7,7 @@ from typing import Optional
 from rich.console import Console
 from rich.live import Live
 
-from .coordinates import Coordinate
+from .coordinate import Coordinate
 from .elements import Sand, Water
 from .matrix import CellMatrix
 

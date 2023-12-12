@@ -10,7 +10,7 @@ from . import cell_state
 from .cell import Cell
 from .cell_state import CellState
 from .colors import SAND_COLORS, WATER_COLORS
-from .coordinates import Coordinate
+from .coordinate import Coordinate
 
 
 class Element(Cell):

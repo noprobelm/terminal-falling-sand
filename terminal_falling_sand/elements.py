@@ -33,7 +33,6 @@ class Element(Cell):
             coord (Coordinate): The coordinate of the cell
             max_coord (Coordinate): The maximum possible coordinate for a cell. Used to identify valid neighbors
             state (CellState): The CellState we should defer to for a cell's behavior
-            color (str): The color of the cell. Hex or standard color names are acceptable here
 
         """
         super().__init__(coord, max_coord, state)
@@ -69,8 +68,7 @@ class Empty(Element, ElementType):
         coord (Coordinate): The coordinate of the cell
         max_coord (Coordinate): The maximum possible coordinate for a cell. Used to identify valid neighbors
         state (CellState): The state a cell is in
-        color (str): The color of a cell
-        _neighbors (dict[str, Coordinate]): A dictionary of MooreNeighboorhood enum variants to their respective coord
+
     """
 
     def __init__(self, coord: Coordinate, max_coord: Coordinate):
@@ -95,8 +93,7 @@ class Sand(Element, ElementType):
         coord (Coordinate): The coordinate of the cell
         max_coord (Coordinate): The maximum possible coordinate for a cell. Used to identify valid neighbors
         state (CellState): The state a cell is in
-        color (str): The color of a cell
-        _neighbors (dict[str, Coordinate]): A dictionary of MooreNeighboorhood enum variants to their respective coord
+
     """
 
     def __init__(self, coord: Coordinate, max_coord: Coordinate):
@@ -122,8 +119,7 @@ class Water(Element, ElementType):
         coord (Coordinate): The coordinate of the cell
         max_coord (Coordinate): The maximum possible coordinate for a cell. Used to identify valid neighbors
         state (CellState): The state a cell is in
-        color (str): The color of a cell
-        _neighbors (dict[str, Coordinate]): A dictionary of MooreNeighboorhood enum variants to their respective coord
+
     """
 
     def __init__(self, coord: Coordinate, max_coord: Coordinate):

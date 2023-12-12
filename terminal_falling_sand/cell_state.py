@@ -105,7 +105,10 @@ class Solid(CellState):
             neighbors (dict[str, CellState]): A map of MooreNeighborhood variants to their respective cell's state
         """
 
-        if neighbors.LOWER is not None and self.weight > matrix[n.y][n.x].weight:
+        if (
+            neighbors.LOWER is not None
+            and self.weight > matrix[neighbors.LOWER.y][neighbors.LOWER.x].weight
+        ):
             return neighbors.LOWER
 
 

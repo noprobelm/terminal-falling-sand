@@ -8,7 +8,7 @@ from rich.console import Console
 from rich.live import Live
 
 from .coordinate import Coordinate
-from .elements import Sand, Water
+from .elements import Sand, Water, Rock
 from .matrix import CellMatrix
 
 
@@ -91,8 +91,6 @@ def main() -> None:
             if random.randint(0, 1) == 1:
                 c = Coordinate(x, y)
                 grid.spawn(Water, c)
-
-    simulate(grid, render=True)
 
 
 if __name__ == "__main__":

@@ -3,8 +3,7 @@
 from typing import Optional
 
 from .cell_state import CellState
-from .coordinates import (Coordinate, MooreNeighborhood, Neighbors,
-                          NeighborStates)
+from .coordinates import Coordinate, MooreNeighborhood, Neighbors
 
 
 class Cell:

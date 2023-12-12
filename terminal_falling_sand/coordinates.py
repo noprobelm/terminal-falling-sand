@@ -33,4 +33,3 @@ class Coordinate:
 
 
 Neighbors = namedtuple("Neighbors", [member.name for member in MooreNeighborhood])
-NeighborStates = namedtuple("Neighbors", [member.name for member in MooreNeighborhood])

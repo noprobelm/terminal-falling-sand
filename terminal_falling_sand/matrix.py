@@ -59,9 +59,9 @@ class CellMatrix(list):
     def step(self) -> None:
         """Steps the simulation forward once
 
-        Explores every element in the simulation by working bottom to top, then middle to left/right for each row. Each
-        step in the simulation calls the 'step' method on the underlying Cell type. Cell.step will determien its next
-        place in the CellMatrix and modify the CellMatrix reference passed to it accordingly.
+        Explores every element in the simulation by working bottom to top, then left -> middle; right -> middle for each
+        row. Each step in the simulation calls the 'step' method on the underlying Cell type. Cell.step will determien
+        its next place in the CellMatrix and modify the CellMatrix reference passed to it accordingly.
 
         Issue:
             When we step each element from left -> right or right -> left, the elements on the trailing end exhibit odd
@@ -71,17 +71,20 @@ class CellMatrix(list):
             matrix for each step, but it's not visually identifiable. Working "middle out" is an acceptable workaround
             for now.
         """
+
+        elements = []
         for y in range(self.max_coord.y + 1):
-            change_order = [
-                self[self.max_coord.y - y][x] for x in range(0, self.midpoint + 1)
-            ]
-            change_order.extend(
-                self[self.max_coord.y - y][self.max_coord.x - x - self.midpoint]
-                for x in range(self.midpoint, self.max_coord.x + 1)
-            )
-            for element in change_order:
-                if not element.state.ignore:
-                    element.change_state(self)
+            row = self.max_coord.y - y
+            for x in range(self.midpoint + 1):
+                elements.append(self[row][x])
+
+            midpoint_offset = self.max_coord.x - self.midpoint
+            for x in range(self.midpoint, self.max_coord.x + 1):
+                elements.append(self[row][midpoint_offset - x])
+
+        for element in elements:
+            if not element.state.ignore:
+                element.change_state(self)
 
     def __rich_console__(
         self, console: Console, options: ConsoleOptions

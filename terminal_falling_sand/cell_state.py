@@ -12,6 +12,8 @@ class CellState:
     Attributes:
         weight (int): Usually influences whether a cell should move in the direction it's looking. The usage of this
                       attr can vary between subclasses
+        color (str): The color to render the cell as
+        ignore (bool): Should the change_state method run
     """
 
     def __init__(self, weight: int, color: str) -> None:
@@ -19,6 +21,7 @@ class CellState:
 
         Args:
             weight (int): The weight of the cell
+            color (str): The color of the cell
         """
         self.weight = weight
         self.color = color
@@ -43,6 +46,9 @@ class Empty(CellState):
 
     Attributes:
         weight (int): The cell's weight
+        color (str): The color to render the cell as
+        ignore (bool): Should the change_state method run
+
     """
 
     def __init__(self, weight: int, color: str) -> None:
@@ -50,6 +56,7 @@ class Empty(CellState):
 
         Args:
             weight (int): The weight of the cell
+            color (str): The color of the cell
 
         """
         super().__init__(weight, color)
@@ -69,7 +76,9 @@ class MovableSolid(CellState):
     """Defines behavior for movable solids
 
     Attributes:
-        weight (int): The weight of the cell
+        weight (int): The cell's weight
+        color (str): The color to render the cell as
+        ignore (bool): Should the change_state method run
     """
 
     def __init__(self, weight: int, color: str):
@@ -77,6 +86,7 @@ class MovableSolid(CellState):
 
         Args:
             weight (int): The weight of the cell
+            color (str): The color of the cell
 
         """
 

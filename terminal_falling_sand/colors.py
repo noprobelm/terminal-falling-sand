@@ -64,3 +64,4 @@ SAND_COLORS = [
 ]
 
 WATER_COLORS = ["#44ddff", "#44bbff"]
+ROCK_COLORS = ["#8c837d", "#645b55", "#4d4740"]

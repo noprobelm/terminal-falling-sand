@@ -69,9 +69,6 @@ class Cell:
             matrix (list): The underlying list of elements found in the CellMatrix
         """
 
-        if self.ignore is True or self.updated is True:
-            return
-
         neighbor = self.state.change_state(self.neighbors, matrix)
         if neighbor is not None:
             neighbor = matrix[neighbor.y][neighbor.x]

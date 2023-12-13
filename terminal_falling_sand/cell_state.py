@@ -145,12 +145,12 @@ class MovableSolid(CellState):
             neighbors (dict[str, CellState]): A map of MooreNeighborhood variants to their respective cell's state
         """
 
-        for i in [
+        for i in (
             neighbors.LOWER,
             (neighbors.LOWER_LEFT, neighbors.LOWER_RIGHT),
             neighbors.LOWER_LEFT,
             neighbors.LOWER_RIGHT,
-        ]:
+        ):
             if isinstance(i, tuple):
                 candidates = []
                 for n in i:
@@ -190,7 +190,7 @@ class Liquid(CellState):
             neighbors (dict[str, CellState]): A map of MooreNeighborhood variants to their respective cell's state
         """
 
-        for i in [
+        for i in (
             neighbors.LOWER,
             (neighbors.LOWER_LEFT, neighbors.LOWER_RIGHT),
             neighbors.LOWER_LEFT,
@@ -198,7 +198,7 @@ class Liquid(CellState):
             (neighbors.LEFT, neighbors.RIGHT),
             neighbors.LEFT,
             neighbors.RIGHT,
-        ]:
+        ):
             if isinstance(i, tuple):
                 candidates = []
                 for n in i:

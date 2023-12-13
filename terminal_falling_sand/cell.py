@@ -15,6 +15,8 @@ class Cell:
     Attributes:
         state (CellState): The state the cell is in
         neighbors (Neighbors): Stores MooreNeighboorhood enum variants to their respective coord
+        updated (bool): Whether the cell has been updated for a given step in the sim
+
     """
 
     def __init__(

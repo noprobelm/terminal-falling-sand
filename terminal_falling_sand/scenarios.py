@@ -44,4 +44,21 @@ def scenario_1():
     return matrix
 
 
+def scenario_2():
+    """A single cell of water with one available space for movement"""
+    xmax, ymax = get_console_parameters()
+    matrix = CellMatrix(xmax, ymax)
+    rock_coords = [
+        Coordinate(xmax // 2, ymax - 1),
+        Coordinate(xmax // 2 + 3, ymax - 1),
+        Coordinate(xmax // 2 + 3, ymax - 1),
+    ]
+    for c in rock_coords:
+        matrix.spawn(elements.Rock, c)
+
+    matrix.spawn(elements.Water, Coordinate(xmax // 2 + 2, ymax - 1))
+    return matrix
+
+
 SCENARIO_1 = scenario_1()
+SCENARIO_2 = scenario_2()

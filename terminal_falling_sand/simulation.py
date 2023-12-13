@@ -43,9 +43,9 @@ class Simulation:
             debug (bool): Controls if the simulation runs in debug mode. This will run cProfile and disable rendering
         """
         if refresh_rate is None:
-            sleep_time = 0
+            sleep_for = 0
         else:
-            sleep_time = 1 / refresh_rate
+            sleep_for = 1 / refresh_rate
 
         if duration == 0:
             duration = float("inf")
@@ -54,26 +54,26 @@ class Simulation:
             import cProfile
 
             cProfile.runctx(
-                "exec(self.run(duration, refresh_rate, False))", globals(), locals()
+                "exec(self.run(duration, sleep_for, False))", globals(), locals()
             )
 
         elif render is True:
-            self.run(duration, sleep_time, True)
+            self.run(duration, sleep_for, True)
 
         else:
-            self.run(duration, sleep_time, False)
+            self.run(duration, sleep_for, False)
 
     def run(
         self,
         duration: Union[float, int],
-        sleep_time: Union[float, int],
+        sleep_for: Union[float, int],
         render: bool,
     ) -> None:
         """Runs the simulation
 
         Args:
             duration (Union[float, int]): The duration the simulation should run for
-            sleep_time (Union[float, int]): The time the simulation should sleep between each step
+            sleep_for (Union[float, int]): The time the simulation should sleep between each step
             render: bool: Cotnrols if the simulation renders to the terminal
         """
         elapsed = 0
@@ -82,12 +82,12 @@ class Simulation:
                 while elapsed < duration:
                     self.matrix.step()
                     live.update(self.matrix, refresh=True)
-                    sleep(sleep_time)
+                    sleep(sleep_for)
                     elapsed += 1
         else:
             while elapsed < duration:
                 self.matrix.step()
-                sleep(sleep_time)
+                sleep(sleep_for)
                 elapsed += 1
 
     @classmethod

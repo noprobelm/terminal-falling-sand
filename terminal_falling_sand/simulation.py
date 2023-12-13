@@ -29,7 +29,7 @@ class Simulation:
 
     def start(
         self,
-        refresh_rate: Optional[int] = None,
+        refresh_rate: int = 0,
         duration: Union[float, int] = 0,
         render: Optional[bool] = True,
         debug=False,
@@ -42,7 +42,7 @@ class Simulation:
             render (bool): Controls if the simulation renders to the terminal. Defaults to True
             debug (bool): Controls if the simulation runs in debug mode. This will run cProfile and disable rendering
         """
-        if refresh_rate is None:
+        if refresh_rate == 0:
             sleep_for = 0
         else:
             sleep_for = 1 / refresh_rate

@@ -41,6 +41,7 @@ class Cell:
                 neighbors.append(None)
 
         self.neighbors = Neighbors(*neighbors)
+        self._updated = False
 
     @property
     def ignore(self):
@@ -68,6 +69,10 @@ class Cell:
 
         neighbor = self.state.change_state(self.neighbors, matrix)
         if neighbor is not None:
+            neighbor = matrix[neighbor.y][neighbor.x]
             old_state = self.state
-            self.state = matrix[neighbor.y][neighbor.x].state
-            matrix[neighbor.y][neighbor.x].state = old_state
+            self.state = neighbor.state
+            neighbor.state = old_state
+            neighbor.updated = True
+
+        self.updated = True

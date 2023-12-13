@@ -38,7 +38,7 @@ class Simulation:
 
         Args:
             duration (Union[float, int]): The duration the simulation should run for. Defaults to 0 (infinity)
-            refresh_rate (int): The number of times the simluation should run before sleeping. Defaults to None
+            refresh_rate (int): The number of times the simluation should run before sleeping. Defaults to 0
             render (bool): Controls if the simulation renders to the terminal. Defaults to True
             debug (bool): Controls if the simulation runs in debug mode. This will run cProfile and disable rendering
         """

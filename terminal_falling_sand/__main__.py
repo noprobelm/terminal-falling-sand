@@ -6,7 +6,7 @@ from .simulation import Simulation
 def main() -> None:
     """Main entrypoint for running a simulation on default settings"""
     sim = Simulation()
-    sim.start(render=True)
+    sim.start(60)
 
 
 if __name__ == "__main__":

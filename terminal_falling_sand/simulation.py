@@ -92,4 +92,9 @@ class Simulation:
 
     @classmethod
     def from_matrix(cls, matrix: CellMatrix) -> Simulation:
+        """Loads a simulation from a pre-existing matrix
+
+        Args:
+            matrix (CellMatrix): The predefined matrix to reference
+        """
         return cls(matrix)

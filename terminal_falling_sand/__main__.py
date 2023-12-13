@@ -45,11 +45,11 @@ def simulate(
 
 
 def build_matrix(xmax: int, ymax: int) -> CellMatrix:
-    """Builds a grid based on x and y constraints
+    """Builds a matrix based on x and y constraints
 
     Args:
-        xmax (int): The maximum x value for the grid
-        ymax (int): The maximum y value for the grid
+        xmax (int): The maximum x value for the matrix
+        ymax (int): The maximum y value for the matrix
 
     Note
         If rendering to a terminal, ymax might be best to set to twice the terminal's height. This is to accommodate
@@ -63,9 +63,9 @@ def build_matrix(xmax: int, ymax: int) -> CellMatrix:
 
 
 def main() -> None:
-    """Main entrypoint for setting grid parameters and spawning elements into the simulation
+    """Main entrypoint for setting matrix parameters and spawning elements into the simulation
 
-    - Sets an xmax/ymax based on the invoking terminal's dimensions, then builds a grid based on these values.
+    - Sets an xmax/ymax based on the invoking terminal's dimensions, then builds a matrix based on these values.
     - Spawns in various elements to participate in the simulation
     - Runs the simulate method using default args
 
@@ -73,26 +73,26 @@ def main() -> None:
     console = Console()
     xmax = console.width
     ymax = console.height * 2
-    grid = build_matrix(console.width, console.height * 2)
+    matrix = build_matrix(console.width, console.height * 2)
     for x in range(xmax // 4, int(xmax * 0.5)):
         for y in range(int(ymax * 0.6), ymax):
             if random.randint(0, 1) == 1:
                 c = Coordinate(x, y)
-                grid.spawn(Sand, c)
+                matrix.spawn(Sand, c)
 
     for x in range(int(xmax * 0.5), int(xmax * 0.75)):
         for y in range(int(ymax * 0.4), int(ymax * 0.6)):
             if random.randint(0, 1) == 1:
                 c = Coordinate(x, y)
-                grid.spawn(Sand, c)
+                matrix.spawn(Sand, c)
 
     for x in range(xmax // 4, int(xmax * 0.5)):
         for y in range(int(ymax * 0.4), int(ymax * 0.6)):
             if random.randint(0, 1) == 1:
                 c = Coordinate(x, y)
-                grid.spawn(Water, c)
+                matrix.spawn(Water, c)
 
-    simulate(grid, 60, render=True)
+    simulate(matrix, 60, render=True)
 
 
 if __name__ == "__main__":

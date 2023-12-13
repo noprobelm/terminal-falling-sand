@@ -41,7 +41,7 @@ class Cell:
                 neighbors.append(None)
 
         self.neighbors = Neighbors(*neighbors)
-        self._updated = False
+        self.updated = False
 
     @property
     def ignore(self):
@@ -66,6 +66,9 @@ class Cell:
         Args:
             matrix (list): The underlying list of elements found in the CellMatrix
         """
+
+        if self.ignore is True or self.updated is True:
+            return
 
         neighbor = self.state.change_state(self.neighbors, matrix)
         if neighbor is not None:

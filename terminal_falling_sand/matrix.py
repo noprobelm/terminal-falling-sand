@@ -72,19 +72,19 @@ class CellMatrix(list):
             for now.
         """
 
-        elements = []
         for y in range(self.max_coord.y + 1):
             row = self.max_coord.y - y
             for x in range(self.midpoint + 1):
-                elements.append(self[row][x])
+                self[row][x].change_state(self)
 
             midpoint_offset = self.max_coord.x - self.midpoint
             for x in range(self.midpoint, self.max_coord.x + 1):
-                elements.append(self[row][midpoint_offset - x])
+                self[row][midpoint_offset - x].change_state(self)
 
-        for element in elements:
-            if not element.state.ignore:
-                element.change_state(self)
+        for y in range(self.max_coord.y + 1):
+            row = self.max_coord.y - y
+            for x in range(self.max_coord.x + 1):
+                self[row][x].updated = False
 
     def __rich_console__(
         self, console: Console, options: ConsoleOptions

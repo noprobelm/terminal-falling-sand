@@ -70,6 +70,8 @@ class CellMatrix(list):
             direction visually solves the problem. This probably means there's some odd behavior in the middle of the
             matrix for each step, but it's not visually identifiable. Working "middle out" is an acceptable workaround
             for now.
+
+        After each cell has been stepped through, reset its updated flag to False
         """
 
         for y in range(self.max_coord.y + 1):

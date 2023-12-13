@@ -2,7 +2,9 @@
 
 import argparse
 
-parser = argparse.ArgumentParser(description="Example argparse script")
+parser = argparse.ArgumentParser(
+    description="A pixel physics simulator with terminal rendering"
+)
 
 parser.add_argument(
     "-r",

@@ -9,7 +9,7 @@ from random import randint
 from . import cell_state
 from .cell import Cell
 from .cell_state import CellState
-from .colors import SAND_COLORS, WATER_COLORS, ROCK_COLORS
+from .colors import ROCK_COLORS, SAND_COLORS, WATER_COLORS
 from .coordinate import Coordinate
 
 

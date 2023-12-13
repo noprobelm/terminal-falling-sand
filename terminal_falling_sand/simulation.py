@@ -1,11 +1,13 @@
-from rich.live import Live
-from rich.console import Console
-from typing import Optional, Union
-from .matrix import CellMatrix
+import random
 from time import sleep
+from typing import Optional, Union
+
+from rich.console import Console
+from rich.live import Live
+
 from .coordinate import Coordinate
 from .elements import Sand, Water
-import random
+from .matrix import CellMatrix
 
 
 class Simulation:

@@ -1,12 +1,11 @@
-import random
+from __future__ import annotations
+
 from time import sleep
 from typing import Optional, Union
 
 from rich.console import Console
 from rich.live import Live
 
-from .coordinate import Coordinate
-from .elements import Sand, Water
 from .matrix import CellMatrix
 
 
@@ -20,31 +19,13 @@ class Simulation:
         1. matrix (CellMatrix): The underlying cell matrix
     """
 
-    def __init__(self) -> None:
+    def __init__(self, matrix: Optional[CellMatrix] = None) -> None:
         """Initializes an instance of the Simulation class"""
 
         console = Console()
         xmax = console.width
         ymax = console.height * 2
-        self.matrix = CellMatrix(xmax, ymax)
-
-        for x in range(xmax // 4, int(xmax * 0.5)):
-            for y in range(int(ymax * 0.6), ymax):
-                if random.randint(0, 1) == 1:
-                    c = Coordinate(x, y)
-                    self.matrix.spawn(Sand, c)
-
-        for x in range(int(xmax * 0.5), int(xmax * 0.75)):
-            for y in range(int(ymax * 0.4), int(ymax * 0.6)):
-                if random.randint(0, 1) == 1:
-                    c = Coordinate(x, y)
-                    self.matrix.spawn(Sand, c)
-
-        for x in range(xmax // 4, int(xmax * 0.5)):
-            for y in range(int(ymax * 0.4), int(ymax * 0.6)):
-                if random.randint(0, 1) == 1:
-                    c = Coordinate(x, y)
-                    self.matrix.spawn(Water, c)
+        self.matrix = matrix or CellMatrix(xmax, ymax)
 
     def start(
         self,
@@ -108,3 +89,7 @@ class Simulation:
                 self.matrix.step()
                 sleep(sleep_time)
                 elapsed += 1
+
+    @classmethod
+    def from_matrix(cls, matrix: CellMatrix) -> Simulation:
+        return cls(matrix)

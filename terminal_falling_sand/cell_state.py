@@ -154,11 +154,11 @@ class MovableSolid(CellState):
             if isinstance(i, tuple):
                 candidates = []
                 for n in i:
-                    if n is not None and self.weight > matrix[n.y][n.x].weight:
+                    if n is not None and self.weight > matrix[n.y][n.x].state.weight:
                         candidates.append(n)
                     if len(candidates) == 2:
                         return candidates[randint(0, 1)]
-            elif i is not None and self.weight > matrix[i.y][i.x].weight:
+            elif i is not None and self.weight > matrix[i.y][i.x].state.weight:
                 return i
 
 
@@ -202,9 +202,9 @@ class Liquid(CellState):
             if isinstance(i, tuple):
                 candidates = []
                 for n in i:
-                    if n is not None and self.weight > matrix[n.y][n.x].weight:
+                    if n is not None and self.weight > matrix[n.y][n.x].state.weight:
                         candidates.append(n)
                     if len(candidates) == 2:
                         return candidates[randint(0, 1)]
-            elif i is not None and self.weight > matrix[i.y][i.x].weight:
+            elif i is not None and self.weight > matrix[i.y][i.x].state.weight:
                 return i

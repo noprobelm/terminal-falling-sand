@@ -106,7 +106,7 @@ class CellMatrix(list):
         """
         for y in range(self.max_coord.y)[::2]:
             for x in range(self.max_coord.x + 1):
-                bg = self[y][x].color
-                fg = self[y + 1][x].color
+                bg = self[y][x].state.color
+                fg = self[y + 1][x].state.color
                 yield Segment("▄", Style(color=fg, bgcolor=bg))
             yield Segment.line()

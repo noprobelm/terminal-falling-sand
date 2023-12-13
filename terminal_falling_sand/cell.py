@@ -45,16 +45,6 @@ class Cell:
         self.neighbors = Neighbors(*neighbors)
         self.updated = False
 
-    @property
-    def color(self):
-        """Interface for state.color"""
-        return self.state.color
-
-    @property
-    def weight(self):
-        """Interface for state.weight"""
-        return self.state.weight
-
     def change_state(self, matrix: list) -> Optional[Coordinate]:
         """Steps the cell forward based on the parameters of its neighbors
 

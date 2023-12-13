@@ -78,13 +78,13 @@ class CellMatrix(list):
             row = self.max_coord.y - y
             for x in range(self.midpoint + 1):
                 element = self[row][x]
-                if element.ignore is False or element.updated is False:
+                if element.ignore is False and element.updated is False:
                     element.change_state(self)
 
             midpoint_offset = self.max_coord.x - self.midpoint
             for x in range(self.midpoint, self.max_coord.x + 1):
                 element = self[row][midpoint_offset - x]
-                if element.ignore is False or element.updated is False:
+                if element.ignore is False and element.updated is False:
                     element.change_state(self)
 
         for y in range(self.max_coord.y + 1):

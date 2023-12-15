@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 from time import sleep
-from typing import Optional, Union
+from typing import Optional, Type, Union
 
 from rich.console import Console
 from rich.live import Live
 
+from .coordinate import Coordinate
+from .elements import ElementType, Empty
 from .matrix import CellMatrix
 
 
@@ -19,13 +21,17 @@ class Simulation:
         1. matrix (CellMatrix): The underlying cell matrix
     """
 
-    def __init__(self, matrix: Optional[CellMatrix] = None) -> None:
+    def __init__(self, xmax: Optional[int] = None, ymax: Optional[int] = None) -> None:
         """Initializes an instance of the Simulation class"""
 
-        console = Console()
-        xmax = console.width
-        ymax = console.height * 2
-        self.matrix = matrix or CellMatrix(xmax, ymax)
+        if xmax is None or ymax is None:
+            console = Console()
+            if xmax is None:
+                xmax = console.width
+            if ymax is None:
+                ymax = console.height * 2
+
+        self.matrix = CellMatrix(xmax, ymax)
 
     def start(
         self,
@@ -119,13 +125,21 @@ class Simulation:
                 if element.state.ignore is False and element.updated is False:
                     element.change_state(self.matrix)
 
-        self.matrix.reset_updated()
+        self.reset_updated()
 
-    @classmethod
-    def from_matrix(cls, matrix: CellMatrix) -> Simulation:
-        """Loads a simulation from a pre-existing matrix
+    def spawn(self, element: Type[ElementType], coord: Coordinate) -> None:
+        """Spawns an element at a given x/y coordinate
 
         Args:
-            matrix (CellMatrix): The predefined matrix to reference
+            element (ElementType): An 'ElementType' type
+            coord (Coordinate): The coordinate to spawn the element at
         """
-        return cls(matrix)
+
+        self.matrix[coord.y][coord.x] = element(coord, self.matrix.max_coord)
+
+    def reset_updated(self):
+        """Resets the 'updated' attribute for all elements in the matrix"""
+        for y in range(self.matrix.max_coord.y + 1):
+            row = self.matrix.max_coord.y - y
+            for x in range(self.matrix.max_coord.x + 1):
+                self.matrix[row][x].updated = False

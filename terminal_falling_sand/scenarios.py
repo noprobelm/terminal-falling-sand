@@ -6,7 +6,7 @@ from rich.console import Console
 
 from . import elements
 from .coordinate import Coordinate
-from .matrix import CellMatrix
+from .simulation import Simulation
 
 
 def get_console_parameters():
@@ -17,53 +17,52 @@ def get_console_parameters():
     return (xmax, ymax)
 
 
-def scenario_1():
+def scenario_1() -> Simulation:
     """Two small hills with some water"""
-
     xmax, ymax = get_console_parameters()
-    matrix = CellMatrix(xmax, ymax)
+    sim = Simulation()
 
     for x in range(xmax // 4, int(xmax * 0.5)):
         for y in range(int(ymax * 0.6), ymax):
             if random.randint(0, 1) == 1:
                 c = Coordinate(x, y)
-                matrix.spawn(elements.Sand, c)
+                sim.spawn(elements.Sand, c)
 
     for x in range(int(xmax * 0.5), int(xmax * 0.75)):
         for y in range(int(ymax * 0.4), int(ymax * 0.6)):
             if random.randint(0, 1) == 1:
                 c = Coordinate(x, y)
-                matrix.spawn(elements.Sand, c)
+                sim.spawn(elements.Sand, c)
 
     for x in range(xmax // 4, int(xmax * 0.5)):
         for y in range(int(ymax * 0.4), int(ymax * 0.6)):
             if random.randint(0, 1) == 1:
                 c = Coordinate(x, y)
-                matrix.spawn(elements.Water, c)
+                sim.spawn(elements.Water, c)
 
-    return matrix
+    return sim
 
 
-def scenario_2():
+def scenario_2() -> Simulation:
     """A single cell of water with one available space for movement"""
     xmax, ymax = get_console_parameters()
-    matrix = CellMatrix(xmax, ymax)
+    sim = Simulation()
     rock_coords = [
         Coordinate(xmax // 2, ymax - 1),
         Coordinate(xmax // 2 + 3, ymax - 1),
         Coordinate(xmax // 2 + 3, ymax - 1),
     ]
     for c in rock_coords:
-        matrix.spawn(elements.Rock, c)
+        sim.spawn(elements.Rock, c)
 
-    matrix.spawn(elements.Water, Coordinate(xmax // 2 + 2, ymax - 1))
-    return matrix
+    sim.spawn(elements.Water, Coordinate(xmax // 2 + 2, ymax - 1))
+    return sim
 
 
-def scenario_3():
+def scenario_3() -> Simulation:
     """Spawns an hourglass with water flowing down"""
     xmax, ymax = get_console_parameters()
-    matrix = CellMatrix(xmax, ymax)
+    sim = Simulation(xmax, ymax)
 
     xmin_left = xmax // 4
     xmax_left = xmax // 2 - 2
@@ -75,38 +74,38 @@ def scenario_3():
 
     x = xmin_left
     while x < xmax_left:
-        matrix.spawn(
+        sim.spawn(
             elements.Glass,
             Coordinate(x, bottom - 1),
         )
-        matrix.spawn(
+        sim.spawn(
             elements.Glass,
             Coordinate(x, bottom - 2),
         )
 
-        matrix.spawn(
+        sim.spawn(
             elements.Glass,
             Coordinate(xmax - x - 2, bottom - 1),
         )
-        matrix.spawn(
+        sim.spawn(
             elements.Glass,
             Coordinate(xmax - x - 2, bottom - 2),
         )
 
-        matrix.spawn(
+        sim.spawn(
             elements.Glass,
             Coordinate(x, top),
         )
-        matrix.spawn(
+        sim.spawn(
             elements.Glass,
             Coordinate(x, top - 1),
         )
 
-        matrix.spawn(
+        sim.spawn(
             elements.Glass,
             Coordinate(xmax - x - 2, top),
         )
-        matrix.spawn(
+        sim.spawn(
             elements.Glass,
             Coordinate(xmax - x - 2, top - 1),
         )
@@ -116,7 +115,7 @@ def scenario_3():
         top += 1
 
     for x in range(xmin_left, xmax_right + 7):
-        matrix.spawn(elements.Glass, Coordinate(xmax - x - 3, ymax - 1))
+        sim.spawn(elements.Glass, Coordinate(xmax - x - 3, ymax - 1))
 
     # parameters for water coords
     top = 5
@@ -128,21 +127,11 @@ def scenario_3():
     # Spawn water at the top of the hourglass
     for y in range(y_start, y_end):
         for x in range(x_start, x_end):
-            matrix.spawn(elements.Water, Coordinate(x, y))
+            sim.spawn(elements.Water, Coordinate(x, y))
         x_start += 1
         x_end -= 1
 
-    # for x in range(x_start, x_end):
-    #     matrix.spawn(elements.Sand, Coordinate(x, top))
-    # matrix.spawn(elements.Sand, Coordinate(xmax // 2 + 2, ymax // 2 - 1))
-    # matrix.spawn(elements.Sand, Coordinate(xmax // 2 + 1, ymax // 2 - 1))
-    # matrix.spawn(elements.Sand, Coordinate(xmax // 2, ymax // 2 - 1))
-    # matrix.spawn(elements.Sand, Coordinate(xmax // 2 - 1, ymax // 2 - 1))
-    # matrix.spawn(elements.Sand, Coordinate(xmax // 2 - 2, ymax // 2 - 1))
-    # matrix.spawn(elements.Sand, Coordinate(xmax // 2 - 3, ymax // 2 - 1))
-    # matrix.spawn(elements.Sand, Coordinate(xmax // 2 - 4, ymax // 2 - 1))
-
-    return matrix
+    return sim
 
 
 SCENARIO_1 = scenario_1()

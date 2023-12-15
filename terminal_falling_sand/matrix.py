@@ -1,13 +1,11 @@
 """Hosts the CellMatrix class used to run the simulation"""
 
-from typing import Type
-
 from rich.console import Console, ConsoleOptions, RenderResult
 from rich.segment import Segment
 from rich.style import Style
 
 from .coordinate import Coordinate
-from .elements import ElementType, Empty
+from .elements import Empty
 
 
 class CellMatrix(list):
@@ -45,23 +43,6 @@ class CellMatrix(list):
                 coord = Coordinate(x, y)
                 matrix[coord.y].append(Empty(coord, self.max_coord))
         super().__init__(matrix)
-
-    def spawn(self, element: Type[ElementType], coord: Coordinate) -> None:
-        """Spawns an element at a given x/y coordinate
-
-        Args:
-            element (ElementType): An 'ElementType' type
-            coord (Coordinate): The coordinate to spawn the element at
-        """
-
-        self[coord.y][coord.x] = element(coord, self.max_coord)
-
-    def reset_updated(self):
-        """Resets the 'updated' attribute for all elements in the matrix"""
-        for y in range(self.max_coord.y + 1):
-            row = self.max_coord.y - y
-            for x in range(self.max_coord.x + 1):
-                self[row][x].updated = False
 
     def __rich_console__(
         self, console: Console, options: ConsoleOptions

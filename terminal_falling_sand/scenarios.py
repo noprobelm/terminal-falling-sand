@@ -73,10 +73,6 @@ def scenario_3():
     top = 6
     bottom = ymax
 
-    for y in range(top, top + 10):
-        for x in range(xmin_left + 10, xmax_right):
-            matrix.spawn(elements.Water, Coordinate(x, y))
-
     x = xmin_left
     while x < xmax_left:
         matrix.spawn(
@@ -121,42 +117,30 @@ def scenario_3():
 
     for x in range(xmin_left, xmax_right + 7):
         matrix.spawn(elements.Glass, Coordinate(xmax - x - 3, ymax - 1))
-    # # middle to bottom left
-    # y = ymax - 1
-    # for x in range(xmax // 4, xmax // 2 - 3):
-    #     matrix.spawn(elements.Glass, Coordinate(x, y))
-    #     matrix.spawn(elements.Glass, Coordinate(x, y - 1))
-    #     y -= 1
 
-    # # middle to top left
-    # y = 6
-    # for x in range(xmax // 4, xmax // 2 - 3):
-    #     matrix.spawn(elements.Glass, Coordinate(x, y))
-    #     matrix.spawn(elements.Glass, Coordinate(x, y - 1))
-    #     y += 1
+    # parameters for water coords
+    top = 5
+    x_start = xmax // 2 - 34
+    x_end = xmax // 2 + 33
+    y_start = top
+    y_end = ymax // 2 - 5
 
-    # # middle to bottom right
-    # y = ymax // 2 + 3
-    # for x in range(xmax // 2 - 1, int(xmax * 0.73) - 1):
-    #     matrix.spawn(elements.Glass, Coordinate(x, y))
-    #     matrix.spawn(elements.Glass, Coordinate(x, y - 1))
-    #     y += 1
+    # Spawn water at the top of the hourglass
+    for y in range(y_start, y_end):
+        for x in range(x_start, x_end):
+            matrix.spawn(elements.Water, Coordinate(x, y))
+        x_start += 1
+        x_end -= 1
 
-    # # middle to top right
-    # y = ymax // 2 + 2
-    # for x in range(xmax // 2 - 1, int(xmax * 0.73) - 1):
-    #     matrix.spawn(elements.Glass, Coordinate(x, y))
-    #     matrix.spawn(elements.Glass, Coordinate(x, y - 1))
-    #     y -= 1
-
-    # # floor
-    # for x in range(xmax // 4, int(xmax * 0.73)):
-    #     matrix.spawn(elements.Glass, Coordinate(x, ymax - 1))
-
-    # # sand
-    # for x in range(xmax // 4 + 5, int(xmax * 0.73) - 5):
-    #     for y in range(4, 10):
-    #         matrix.spawn(elements.Sand, Coordinate(x, y))
+    # for x in range(x_start, x_end):
+    #     matrix.spawn(elements.Sand, Coordinate(x, top))
+    # matrix.spawn(elements.Sand, Coordinate(xmax // 2 + 2, ymax // 2 - 1))
+    # matrix.spawn(elements.Sand, Coordinate(xmax // 2 + 1, ymax // 2 - 1))
+    # matrix.spawn(elements.Sand, Coordinate(xmax // 2, ymax // 2 - 1))
+    # matrix.spawn(elements.Sand, Coordinate(xmax // 2 - 1, ymax // 2 - 1))
+    # matrix.spawn(elements.Sand, Coordinate(xmax // 2 - 2, ymax // 2 - 1))
+    # matrix.spawn(elements.Sand, Coordinate(xmax // 2 - 3, ymax // 2 - 1))
+    # matrix.spawn(elements.Sand, Coordinate(xmax // 2 - 4, ymax // 2 - 1))
 
     return matrix
 

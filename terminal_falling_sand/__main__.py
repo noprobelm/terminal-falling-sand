@@ -7,7 +7,7 @@ from .args import args
 
 def main() -> None:
     """Main entrypoint for running a simulation on default settings"""
-    sim = Simulation.from_matrix(scenarios.SCENARIO_1)
+    sim = Simulation.from_matrix(scenarios.SCENARIO_3)
     sim.start(**args)
 
 

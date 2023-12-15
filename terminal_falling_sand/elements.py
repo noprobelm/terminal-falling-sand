@@ -136,3 +136,10 @@ class Water(Element, ElementType):
         color = WATER_COLORS[randint(0, len(WATER_COLORS) - 1)]
         state = cell_state.Liquid(weight=1, color=color)
         super().__init__(coord, max_coord, state)
+
+
+class Glass(Element, ElementType):
+    def __init__(self, coord: Coordinate, max_coord: Coordinate):
+        color = "#a7c7cb"
+        state = cell_state.ImmovableSolid(color)
+        super().__init__(coord, max_coord, state)

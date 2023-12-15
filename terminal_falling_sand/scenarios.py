@@ -60,5 +60,103 @@ def scenario_2():
     return matrix
 
 
+def scenario_3():
+    xmax, ymax = get_console_parameters()
+    matrix = CellMatrix(xmax, ymax)
+
+    xmin_left = xmax // 4
+    xmax_left = xmax // 2 - 2
+
+    xmax_right = xmax
+
+    top = 6
+    bottom = ymax
+
+    for y in range(top, top + 10):
+        for x in range(xmin_left + 10, xmax_right - 50):
+            matrix.spawn(elements.Water, Coordinate(x, y))
+    x = xmin_left
+    while x < xmax_left:
+        matrix.spawn(
+            elements.Glass,
+            Coordinate(x, bottom - 1),
+        )
+        matrix.spawn(
+            elements.Glass,
+            Coordinate(x, bottom - 2),
+        )
+
+        matrix.spawn(
+            elements.Glass,
+            Coordinate(xmax_right - x - 2, bottom - 1),
+        )
+        matrix.spawn(
+            elements.Glass,
+            Coordinate(xmax_right - x - 2, bottom - 2),
+        )
+
+        matrix.spawn(
+            elements.Glass,
+            Coordinate(x, top),
+        )
+        matrix.spawn(
+            elements.Glass,
+            Coordinate(x, top - 1),
+        )
+
+        matrix.spawn(
+            elements.Glass,
+            Coordinate(xmax_right - x - 2, top),
+        )
+        matrix.spawn(
+            elements.Glass,
+            Coordinate(xmax_right - x - 2, top - 1),
+        )
+
+        x += 1
+        bottom -= 1
+        top += 1
+
+    # # middle to bottom left
+    # y = ymax - 1
+    # for x in range(xmax // 4, xmax // 2 - 3):
+    #     matrix.spawn(elements.Glass, Coordinate(x, y))
+    #     matrix.spawn(elements.Glass, Coordinate(x, y - 1))
+    #     y -= 1
+
+    # # middle to top left
+    # y = 6
+    # for x in range(xmax // 4, xmax // 2 - 3):
+    #     matrix.spawn(elements.Glass, Coordinate(x, y))
+    #     matrix.spawn(elements.Glass, Coordinate(x, y - 1))
+    #     y += 1
+
+    # # middle to bottom right
+    # y = ymax // 2 + 3
+    # for x in range(xmax // 2 - 1, int(xmax * 0.73) - 1):
+    #     matrix.spawn(elements.Glass, Coordinate(x, y))
+    #     matrix.spawn(elements.Glass, Coordinate(x, y - 1))
+    #     y += 1
+
+    # # middle to top right
+    # y = ymax // 2 + 2
+    # for x in range(xmax // 2 - 1, int(xmax * 0.73) - 1):
+    #     matrix.spawn(elements.Glass, Coordinate(x, y))
+    #     matrix.spawn(elements.Glass, Coordinate(x, y - 1))
+    #     y -= 1
+
+    # # floor
+    # for x in range(xmax // 4, int(xmax * 0.73)):
+    #     matrix.spawn(elements.Glass, Coordinate(x, ymax - 1))
+
+    # # sand
+    # for x in range(xmax // 4 + 5, int(xmax * 0.73) - 5):
+    #     for y in range(4, 10):
+    #         matrix.spawn(elements.Sand, Coordinate(x, y))
+
+    return matrix
+
+
 SCENARIO_1 = scenario_1()
 SCENARIO_2 = scenario_2()
+SCENARIO_3 = scenario_3()

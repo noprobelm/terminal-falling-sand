@@ -118,6 +118,8 @@ def scenario_3():
         bottom -= 1
         top += 1
 
+    for x in range(xmin_left, xmax_right + 7):
+        matrix.spawn(elements.Glass, Coordinate(xmax - x - 3, ymax - 1))
     # # middle to bottom left
     # y = ymax - 1
     # for x in range(xmax // 4, xmax // 2 - 3):

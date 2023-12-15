@@ -61,6 +61,7 @@ def scenario_2():
 
 
 def scenario_3():
+    """Spawns an hourglass with water flowing down"""
     xmax, ymax = get_console_parameters()
     matrix = CellMatrix(xmax, ymax)
 

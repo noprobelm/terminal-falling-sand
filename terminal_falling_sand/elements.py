@@ -139,7 +139,24 @@ class Water(Element, ElementType):
 
 
 class Glass(Element, ElementType):
+    """A Glass element
+
+    Attributes:
+        state (CellState): The state a cell is in
+
+    """
+
     def __init__(self, coord: Coordinate, max_coord: Coordinate):
+        """Initializes an instance of the Water class
+
+        - A Water cell's color is set to one of those found among the WATER_COLORS dict
+
+        Args:
+            coord (Coordinate): The coordinate of the cell
+            max_coord (Coordinate): The maximum possible coordinate for a cell. Used to identify valid neighbors
+
+        """
+
         color = "#a7c7cb"
         state = cell_state.ImmovableSolid(color)
         super().__init__(coord, max_coord, state)

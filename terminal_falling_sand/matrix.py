@@ -56,37 +56,8 @@ class CellMatrix(list):
 
         self[coord.y][coord.x] = element(coord, self.max_coord)
 
-    def step(self) -> None:
-        """Steps the simulation forward once
-
-        Explores every element in the simulation by working bottom to top, then left -> middle; right -> middle for each
-        row. Each step in the simulation calls the 'step' method on the underlying Cell type. Cell.step will determien
-        its next place in the CellMatrix and modify the CellMatrix reference passed to it accordingly.
-
-        Issue:
-            When we step each element from left -> right or right -> left, the elements on the trailing end exhibit odd
-            behavior. Specifically, elements will move diagonally and to the left (or right) depending on the order
-            we're stepping them in. Unsure of the exact cause of this, but for now, working "middle out" in either
-            direction visually solves the problem. This probably means there's some odd behavior in the middle of the
-            matrix for each step, but it's not visually identifiable. Working "middle out" is an acceptable workaround
-            for now.
-
-        After each cell has been stepped through, reset its updated flag to False
-        """
-
-        for y in range(self.max_coord.y + 1):
-            row = self.max_coord.y - y
-            for x in range(self.midpoint + 1):
-                element = self[row][x]
-                if element.state.ignore is False and element.updated is False:
-                    element.change_state(self)
-
-            midpoint_offset = self.max_coord.x - self.midpoint
-            for x in range(self.midpoint, self.max_coord.x + 1):
-                element = self[row][midpoint_offset - x]
-                if element.state.ignore is False and element.updated is False:
-                    element.change_state(self)
-
+    def reset_updated(self):
+        """Resets the 'updated' attribute for all elements in the matrix"""
         for y in range(self.max_coord.y + 1):
             row = self.max_coord.y - y
             for x in range(self.max_coord.x + 1):

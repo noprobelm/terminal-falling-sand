@@ -80,15 +80,46 @@ class Simulation:
         if render is True:
             with Live(self.matrix, screen=True, auto_refresh=False) as live:
                 while elapsed < duration:
-                    self.matrix.step()
+                    self.step()
                     live.update(self.matrix, refresh=True)
                     sleep(sleep_for)
                     elapsed += 1
         else:
             while elapsed < duration:
-                self.matrix.step()
+                self.step()
                 sleep(sleep_for)
                 elapsed += 1
+
+    def step(self) -> None:
+        """Steps the simulation forward once
+
+        Explores every element in the simulation by working bottom to top, then left -> middle; right -> middle for each
+        row. Each step in the simulation calls the 'step' method on the underlying Cell type. Cell.step will determien
+        its next place in the CellMatrix and modify the CellMatrix reference passed to it accordingly.
+
+        Issue:
+            When we step each element from left -> right or right -> left, the elements on the trailing end exhibit odd
+            behavior. Specifically, elements will move diagonally and to the left (or right) depending on the order
+            we're stepping them in. Unsure of the exact cause of this, but for now, working "middle out" in either
+            direction visually solves the problem. This probably means there's some odd behavior in the middle of the
+            matrix for each step, but it's not visually identifiable. Working "middle out" is an acceptable workaround
+            for now.
+
+        After each cell has been stepped through, reset its updated flag to False
+        """
+        for y in range(self.matrix.max_coord.y + 1):
+            row = self.matrix.max_coord.y - y
+            for x in range(self.matrix.midpoint + 1):
+                element = self.matrix[row][x]
+                if element.state.ignore is False and element.updated is False:
+                    element.change_state(self.matrix)
+            midpoint_offset = self.matrix.max_coord.x - self.matrix.midpoint
+            for x in range(self.matrix.midpoint, self.matrix.max_coord.x + 1):
+                element = self.matrix[row][midpoint_offset - x]
+                if element.state.ignore is False and element.updated is False:
+                    element.change_state(self.matrix)
+
+        self.matrix.reset_updated()
 
     @classmethod
     def from_matrix(cls, matrix: CellMatrix) -> Simulation:

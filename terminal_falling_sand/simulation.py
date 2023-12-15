@@ -7,7 +7,7 @@ from rich.console import Console
 from rich.live import Live
 
 from .coordinate import Coordinate
-from .elements import ElementType, Empty
+from .elements import ElementType
 from .matrix import CellMatrix
 
 

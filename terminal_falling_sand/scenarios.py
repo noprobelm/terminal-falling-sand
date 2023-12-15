@@ -67,14 +67,15 @@ def scenario_3():
     xmin_left = xmax // 4
     xmax_left = xmax // 2 - 2
 
-    xmax_right = xmax
+    xmax_right = int(xmax * 0.68)
 
     top = 6
     bottom = ymax
 
     for y in range(top, top + 10):
-        for x in range(xmin_left + 10, xmax_right - 50):
+        for x in range(xmin_left + 10, xmax_right):
             matrix.spawn(elements.Water, Coordinate(x, y))
+
     x = xmin_left
     while x < xmax_left:
         matrix.spawn(
@@ -88,11 +89,11 @@ def scenario_3():
 
         matrix.spawn(
             elements.Glass,
-            Coordinate(xmax_right - x - 2, bottom - 1),
+            Coordinate(xmax - x - 2, bottom - 1),
         )
         matrix.spawn(
             elements.Glass,
-            Coordinate(xmax_right - x - 2, bottom - 2),
+            Coordinate(xmax - x - 2, bottom - 2),
         )
 
         matrix.spawn(
@@ -106,11 +107,11 @@ def scenario_3():
 
         matrix.spawn(
             elements.Glass,
-            Coordinate(xmax_right - x - 2, top),
+            Coordinate(xmax - x - 2, top),
         )
         matrix.spawn(
             elements.Glass,
-            Coordinate(xmax_right - x - 2, top - 1),
+            Coordinate(xmax - x - 2, top - 1),
         )
 
         x += 1

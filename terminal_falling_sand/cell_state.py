@@ -1,7 +1,7 @@
 """Hosts the CellState class and its various subclasses"""
 
 from random import randint
-from typing import Optional
+from typing import Optional, Union
 
 from .coordinate import Coordinate, Neighbors
 
@@ -16,7 +16,7 @@ class CellState:
         ignore (bool): Should the change_state method run
     """
 
-    def __init__(self, weight: int, color: str) -> None:
+    def __init__(self, weight: Union[float, int], color: str) -> None:
         """Initializes an instance of the CellState class
 
         Args:
@@ -110,6 +110,11 @@ class Solid(CellState):
             and self.weight > matrix[neighbors.LOWER.y][neighbors.LOWER.x].weight
         ):
             return neighbors.LOWER
+
+
+class ImmovableSolid(CellState):
+    def __init__(self, color: str):
+        super().__init__(float("inf"), color)
 
 
 class MovableSolid(CellState):
